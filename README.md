@@ -1,2 +1,2 @@
 # SocShare
-Website for sharing your society events
+Website for sharing your society event
