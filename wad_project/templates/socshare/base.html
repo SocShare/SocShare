@@ -3,12 +3,37 @@
 
 <html>
     <head>
-        <title>{% block title %}SocShare{% endblock %}</title>
+        <title>{% block title %}{% endblock %}</title>
+        <!-- Include Bootstrap styles -->
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+        <!-- Link our own stylesheet -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <!-- Include Bootstrap js functions -->
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
     </head>
     <body>
-        {% block body %}
-        {% endblock %}
+        <div class="wrapper">
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <a href="#">SocShare</a>
+                </div>
+                <hr width="75%">
+                <br/>
+                <ul class="list-unstyled nav-links">
+                    <li class="active">
+                        <li><a href="#">Events</a></li>
+                    </li>
+                    <li><a href="#">Calendar</a></li>
+                    <li><a href="#">Societies</a></li>
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Register</a></li>
+                </ul>
+            </nav>
+        
+            <div class="content">
+                {% block container %}
+                {% endblock %}
+            </div>
+        </div>
     </body>
 </html>
