@@ -1,0 +1,44 @@
+.wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 100vh;
+    background: #E91D63;
+    color: #fff;
+}
+
+.sidebar-header {
+    text-align:center;
+    padding-top:30px;
+    padding-bottom:10px;
+}
+
+.sidebar-header a {
+    font-weight:bold;
+    text-decoration: none;
+    color:#fff;
+    font-size:35px;
+}
+
+.content {
+    padding:30px;
+}
+
+.nav-links {
+    text-align:center;
+}
+
+.nav-links li {
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.nav-links a {
+    font-size:20px;
+    color:#fff;
+    text-decoration: none;
+}
