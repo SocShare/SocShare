@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.utils import timezone
+from .utils.models import random_name
+
+# TODO: Create Google Auth model
 
 class Society(models.Model):
     name = models.CharField(max_length=128)
@@ -34,7 +37,9 @@ class Event(models.Model):
 
 class Comment(models.Model):
     content = models.TextField()
-    name = models.CharField(max_length=30)
+    name = random_name()
+    date = models.DateTimeField(default=timezone.now)
+    # TODO: Change to Google Auth user
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
