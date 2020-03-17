@@ -1,0 +1,14 @@
+{% extends 'socshare/base.html' %}
+{% load static %}
+
+{% block container %}
+<div class="row">
+    <div class="col-sm-4 text-muted">{% block breadcrumb %}{% endblock %}</div>
+    <div class="col-sm-4 display-4">{% block pageTitle %}{% endblock %}</div>
+    <div class="col-sm-4">Search Bar</div>
+    <div class="col-sm-12">
+        {% block section %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
