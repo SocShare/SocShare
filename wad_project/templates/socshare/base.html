@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <!-- Include Bootstrap js functions -->
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="https://kit.fontawesome.com/09e69acc6e.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <div class="wrapper">
@@ -21,12 +22,12 @@
                 <br/>
                 <ul class="list-unstyled nav-links">
                     <li class="active">
-                        <li><a href="#">Events</a></li>
+                        <li><a href="{% url 'socshare:events' %}">Events</a></li>
                     </li>
-                    <li><a href="#">Calendar</a></li>
+                    <li><a href="{% url 'socshare:calendar' %}">Calendar</a></li>
                     <li><a href="#">Societies</a></li>
-                    <li><a href="#">Login</a></li>
-                    <li><a href="#">Register</a></li>
+                    <li><a href="{% url 'socshare:login' %}">Login</a></li>
+                    <li><a href="{% url 'socshare:register' %}">Register</a></li>
                 </ul>
             </nav>
         

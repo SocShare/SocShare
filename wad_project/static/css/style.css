@@ -47,3 +47,11 @@
 /* .breadcrumb {
     color: slategray;
 } */
+
+.card-img-top {
+    height: 170px;
+}
+
+.card {
+    margin: 30px;
+}

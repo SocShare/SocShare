@@ -1,19 +1,37 @@
 {% extends 'socshare/top_bar_base.html' %}
 {% load static %}
 
+
 {% block title %}
-Test
+Events
 {% endblock %}
 
 {% block breadcrumb %}
 .. / events
 {% endblock %}
 
-
 {% block pageTitle %}
 Events
 {% endblock %}
 
 {% block section %}
-<b>Body</b>
+<!-- <b>Body</b> -->
+<div class="d-flex flex-wrap">
+    {% if events %}
+    {% for e in events %}
+    <div class="card flex-fill" style="width:420px">
+        <img class="card-img-top" src="{{ e.img }}" alt="Card image">
+        <div class="card-body">
+            <h4 class="card-title">{{ e.name }}</h4>
+            <p class="card-text">{{ e.description }}</p>
+            <a href="{{ e.url }}" class="btn btn-primary">Read More</a>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <strong>There are no Events right now.</strong>
+    {% endif %}
+</div>
+
+
 {% endblock %}
