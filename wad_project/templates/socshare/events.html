@@ -3,7 +3,7 @@
 
 
 {% block title %}
-Events
+{{ pageTitle }}
 {% endblock %}
 
 {% block breadcrumb %}
@@ -11,7 +11,7 @@ Events
 {% endblock %}
 
 {% block pageTitle %}
-Events
+{{ pageTitle }}
 {% endblock %}
 
 {% block section %}
@@ -20,11 +20,11 @@ Events
     {% if events %}
     {% for e in events %}
     <div class="card flex-fill" style="width:420px">
-        <img class="card-img-top" src="{{ e.img }}" alt="Card image">
+        <img class="card-img-top" src="/media/events_banners/{{ e.img }}" alt="Card image">
         <div class="card-body">
             <h4 class="card-title">{{ e.name }}</h4>
             <p class="card-text">{{ e.description }}</p>
-            <a href="{{ e.url }}" class="btn btn-primary">Read More</a>
+            <a href="/events/{{ e.url }}" class="btn btn-primary">Read More</a>
         </div>
     </div>
     {% endfor %}
