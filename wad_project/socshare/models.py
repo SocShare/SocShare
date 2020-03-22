@@ -2,14 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.utils import timezone
-from .utils.models import random_name
+from socshare.utils.models import random_name
 
 # TODO: Create Google Auth model
 
 class Society(models.Model):
     name = models.CharField(max_length=128)
     acronym = models.CharField(max_length=15)
+    description = models.TextField()
     slug = models.SlugField()
+    website = models.URLField(blank=True)
+    picture = models.ImageField(upload_to='profile', blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
