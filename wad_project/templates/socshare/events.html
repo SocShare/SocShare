@@ -1,10 +1,23 @@
 {% extends 'socshare/base.html' %}
 {% load static %}
 
-{% block title %}
-Test
-{% endblock %}
-
 {% block container %}
-<b>Body</b>
+<div class="row row-cols-md-1 row-cols-lg-2 row-cols-xl-3 flex-grow">
+    {% if events %}
+    {% for e in events %}
+    <div class="col mb-4">
+        <div class="card">
+            <img src="/media/events_banners/{{ e.img }}" class="card-img-top" alt="Card image">
+            <div class="card-body">
+                <h5 class="card-title">{{ e.name }}</h5>
+                <p class="card-text">{{ e.description }}</p>
+                <a href="/events/{{ e.url }}" class="btn btn-primary color-main">Read More</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <strong>There are no Events right now.</strong>
+    {% endif %}
+</div>
 {% endblock %}

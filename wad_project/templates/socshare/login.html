@@ -1,0 +1,37 @@
+{% extends 'socshare/base.html' %}
+{% load static %}
+
+{% block container %}
+<div class="row flex-vert-center flex-grow justify-content-center">
+    <div class="col-12 col-xl-4 col-lg-5">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-center" style="padding-bottom: 20px;">Login to your society account</h4>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Stay logged in</label>
+                </div>
+                <button type="submit" class="btn btn-primary color-main">Submit</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-auto text-center">
+        <b>OR</b>
+    </div>
+    <div class="col-12 col-xl-4 col-lg-5">
+        <h5 class="text-center">Login to your user account</h5>
+    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <br/>
+    <br/>
+    <br/>
+    </div>
+</div>
+{% endblock %}
