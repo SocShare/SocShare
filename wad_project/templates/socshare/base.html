@@ -3,34 +3,36 @@
 
 <html>
     <head>
-        <title>{% block title %}{% endblock %}</title>
+        <title>{{ title }}</title>
         <!-- Include Bootstrap styles -->
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <!-- Link our own stylesheet -->
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <!-- Include Bootstrap js functions -->
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="https://kit.fontawesome.com/09e69acc6e.js" crossorigin="anonymous"></script>
+
+        <meta name="google-signin-client_id" content="375227693840-d1eeqq1cik0tmcjcg5j0jj9hfd1oe2e0.apps.googleusercontent.com">
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
     </head>
     <body>
         <div class="wrapper">
-            <nav id="sidebar">
+            <nav id="sidebar" class="color-main">
                 <div class="sidebar-header">
                     <a href="#">SocShare</a>
                 </div>
                 <hr width="75%">
-                <br/>
                 <ul class="list-unstyled nav-links">
-                    <li class="active">
-                        <li><a href="#">Events</a></li>
-                    </li>
-                    <li><a href="#">Calendar</a></li>
-                    <li><a href="#">Societies</a></li>
-                    <li><a href="#">Login</a></li>
-                    <li><a href="#">Register</a></li>
+                    <li><a href="{% url 'socshare:events' %}">Events</a></li>
+                    <li><a href="{% url 'socshare:calendar' %}">Calendar</a></li>
+                    <li><a href="{% url 'socshare:profile' 'test' %}">Societies</a></li>
+                    <li><a href="{% url 'socshare:login' %}">Login</a></li>
+                    <li><a href="{% url 'socshare:register' %}">Register</a></li>
                 </ul>
             </nav>
         
             <div class="content">
+                <b>{{ title }}</b>
                 {% block container %}
                 {% endblock %}
             </div>
