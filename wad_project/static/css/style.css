@@ -63,3 +63,7 @@
     display: flex;
     justify-content: center;
 }
+
+.abcRioButtonContentWrapper {
+    background-color: #E91D63 !important;
+}
