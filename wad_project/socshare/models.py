@@ -2,14 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.utils import timezone
-from .utils.models import random_name
+from socshare.utils.models import random_name
 
 # TODO: Create Google Auth model
 
 class Society(models.Model):
     name = models.CharField(max_length=128)
     acronym = models.CharField(max_length=15)
+    description = models.TextField()
     slug = models.SlugField()
+    website = models.URLField(blank=True)
+    picture = models.ImageField(upload_to='profile', blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
@@ -37,11 +40,15 @@ class Event(models.Model):
 
 class Comment(models.Model):
     content = models.TextField()
-    name = random_name()
+    name = models.CharField(max_length=50)
     date = models.DateTimeField(default=timezone.now)
     # TODO: Change to Google Auth user
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        self.name = random_name()
+        super(Comment, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.content[:20]
