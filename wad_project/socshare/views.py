@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 def events(request):
-    context = {"pageTitle":"Events","events":[]}
+    context = {"title":"Events","events":[]}
     temp = {
                 "name":"Card Title",
                 "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sem risus, suscipit et commodo sed, viverra nec erat. Donec at tellus nec massa elementum posuere ac et turpis. Aliquam tristique lectus at congue fringilla. Donec et nibh eu leo gravida molestie.",
@@ -16,7 +16,7 @@ def calendar(request):
     return render(request,'socshare/calendar.html')
 
 def login(request):
-    return render(request,'socshare/login.html')
+    return render(request,'socshare/login.html',context={"title":"Login"})
 
 def register(request):
     return render(request,'socshare/register.html')

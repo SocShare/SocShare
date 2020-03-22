@@ -1,30 +1,18 @@
-{% extends 'socshare/top_bar_base.html' %}
+{% extends 'socshare/base.html' %}
 {% load static %}
 
-
-{% block title %}
-{{ pageTitle }}
-{% endblock %}
-
-{% block breadcrumb %}
-.. / events
-{% endblock %}
-
-{% block pageTitle %}
-{{ pageTitle }}
-{% endblock %}
-
-{% block section %}
-<!-- <b>Body</b> -->
-<div class="d-flex flex-wrap">
+{% block container %}
+<div class="row row-cols-md-1 row-cols-lg-2 row-cols-xl-3 flex-grow">
     {% if events %}
     {% for e in events %}
-    <div class="card flex-fill" style="width:420px">
-        <img class="card-img-top" src="/media/events_banners/{{ e.img }}" alt="Card image">
-        <div class="card-body">
-            <h4 class="card-title">{{ e.name }}</h4>
-            <p class="card-text">{{ e.description }}</p>
-            <a href="/events/{{ e.url }}" class="btn btn-primary">Read More</a>
+    <div class="col mb-4">
+        <div class="card">
+            <img src="/media/events_banners/{{ e.img }}" class="card-img-top" alt="Card image">
+            <div class="card-body">
+                <h5 class="card-title">{{ e.name }}</h5>
+                <p class="card-text">{{ e.description }}</p>
+                <a href="/events/{{ e.url }}" class="btn btn-primary color-main">Read More</a>
+            </div>
         </div>
     </div>
     {% endfor %}
@@ -32,6 +20,4 @@
     <strong>There are no Events right now.</strong>
     {% endif %}
 </div>
-
-
 {% endblock %}
