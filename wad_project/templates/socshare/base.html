@@ -13,7 +13,7 @@
         <!-- <script src="https://kit.fontawesome.com/09e69acc6e.js" crossorigin="anonymous" async defer></script> -->
 
         <meta name="google-signin-client_id" content="375227693840-d1eeqq1cik0tmcjcg5j0jj9hfd1oe2e0.apps.googleusercontent.com">
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="https://apis.google.com/js/platform.js?onload=initGoogle" async defer></script>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="{% static 'js/main.js' %}"></script>
@@ -38,7 +38,9 @@
                 {% if not fullscreen %}
                 <div class="header">
                     <button onclick="togglesideBar()">AAA</button>
-                    <b>{{ title }}</b>
+                    <b class="ml-2">{{ title }}</b>
+                    <div class="flex-grow"></div>
+                    <b id="profilename"></b>
                 </div>
                 {% else %}
                 <!-- there should be floating toggle -->

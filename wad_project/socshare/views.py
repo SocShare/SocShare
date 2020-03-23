@@ -15,7 +15,7 @@ def events(request):
     return render(request,'socshare/events.html',context=context)
 
 def calendar(request):
-    return render(request,'socshare/calendar.html')
+    return render(request,'socshare/calendar.html',context={"title":"Calendar"})
 
 def login(request):
     return render(request,'socshare/login.html',context={"title":"Login"})
