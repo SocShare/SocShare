@@ -7,7 +7,9 @@
     min-width: 250px;
     max-width: 250px;
     min-height: 100vh;
+    margin-left: 0;
     color: #fff;
+    transition: margin-left 0.5s;
 }
 
 #sidebar.active {
