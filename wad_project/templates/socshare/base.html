@@ -16,12 +16,13 @@
         <script src="https://apis.google.com/js/platform.js" async defer></script>
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="{% static 'js/main.js' %}"></script>
     </head>
     <body>
         <div class="wrapper">
             <nav id="sidebar" class="color-main">
                 <div class="sidebar-header">
-                    <a href="#">SocShare</a>
+                    <a href="{% url 'socshare:events' %}">SocShare</a>
                 </div>
                 <hr width="75%">
                 <ul class="list-unstyled nav-links">
@@ -32,7 +33,12 @@
                     <li><a href="{% url 'socshare:register' %}">Register</a></li>
                 </ul>
             </nav>
+        
             <div class="content {% if fullscreen %}fullscreen{% endif %}">
+                <div>
+                    <button onclick="togglesideBar()">AAA</button>
+                    <b>{{ title }}</b>
+                </div>
                 {% if not fullscreen %}
                     <b>{{ title }}</b>
                 {% endif %}

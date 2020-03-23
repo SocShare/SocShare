@@ -1,6 +1,6 @@
 .wrapper {
     display: flex;
-    align-items: stretch;
+    max-height: 100vh;
 }
 
 #sidebar {
@@ -8,6 +8,10 @@
     max-width: 250px;
     min-height: 100vh;
     color: #fff;
+}
+
+#sidebar.active {
+    margin-left: -250px;
 }
 
 .color-main {
@@ -32,6 +36,7 @@
     padding: 30px;
     display: flex;
     flex-direction: column;
+    overflow: scroll;
 }
 
 .fullscreen {
