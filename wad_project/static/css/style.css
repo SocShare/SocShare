@@ -31,12 +31,16 @@
     font-size:35px;
 }
 
+.header {
+    padding: 20px;
+}
+
 .content {
     flex-grow: 1;
-    padding: 30px;
+    padding: 0 30px 30px 30px;
     display: flex;
     flex-direction: column;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .fullscreen {

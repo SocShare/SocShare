@@ -35,12 +35,13 @@
             </nav>
         
             <div class="content {% if fullscreen %}fullscreen{% endif %}">
-                <div>
+                {% if not fullscreen %}
+                <div class="header">
                     <button onclick="togglesideBar()">AAA</button>
                     <b>{{ title }}</b>
                 </div>
-                {% if not fullscreen %}
-                    <b>{{ title }}</b>
+                {% else %}
+                <!-- there should be floating toggle -->
                 {% endif %}
                 {% block container %}
                 {% endblock %}
