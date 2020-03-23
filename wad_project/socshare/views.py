@@ -1,16 +1,17 @@
 from django.shortcuts import render
 from socshare.forms import UserForm, SocietyForm
 
-def events(request):
-    context = {"title":"Events","events":[]}
-    temp = {
+dummy_event = {
                 "name":"Card Title",
                 "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sem risus, suscipit et commodo sed, viverra nec erat. Donec at tellus nec massa elementum posuere ac et turpis. Aliquam tristique lectus at congue fringilla. Donec et nibh eu leo gravida molestie.",
                 "img":"test.png",
                 "url":"Test"
             }
+
+def events(request):
+    context = {"title":"Events","events":[]}
     for i in range(10):
-        context["events"].append(temp)
+        context["events"].append(dummy_event)
     return render(request,'socshare/events.html',context=context)
 
 def calendar(request):
@@ -26,7 +27,9 @@ def dashboard(request):
     return render(request,'socshare/dashboard.html')
 
 def profile(request,profile_slug):
-    context = {"pageTitle":"Events","banner_img_url":"test.png"}
+    context = {"title":"Society Profile", "fullscreen":True, "banner_img_url":"test.png", "events":[]}
+    for i in range(4):
+        context["events"].append(dummy_event)
     return render(request,'socshare/profile.html',context=context)
 
 def event_page(request,event_slug):

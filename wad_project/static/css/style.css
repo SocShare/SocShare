@@ -1,13 +1,19 @@
 .wrapper {
     display: flex;
-    align-items: stretch;
+    max-height: 100vh;
 }
 
 #sidebar {
     min-width: 250px;
     max-width: 250px;
     min-height: 100vh;
+    margin-left: 0;
     color: #fff;
+    transition: margin-left 0.5s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
 }
 
 .color-main {
@@ -27,11 +33,20 @@
     font-size:35px;
 }
 
+.header {
+    padding: 20px;
+}
+
 .content {
     flex-grow: 1;
-    padding: 30px;
+    padding: 0 30px 30px 30px;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
+}
+
+.fullscreen {
+    padding: 0 !important;
 }
 
 .nav-links {
@@ -67,3 +82,28 @@
 .abcRioButtonContentWrapper {
     background-color: #E91D63 !important;
 }
+
+/* Start society profile */
+
+.banner-img {
+    max-height: 40vh;
+    object-fit: cover;
+}
+.logo-container {
+    margin-top: -75px;
+    margin-left: 10vw;
+    display: flex;
+}
+
+.logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.logo-name {
+    display: inline-block;
+    align-self: flex-end;
+    margin: 25px;
+}
+
+/* End society profile */
