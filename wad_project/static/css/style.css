@@ -34,6 +34,10 @@
     flex-direction: column;
 }
 
+.fullscreen {
+    padding: 0 !important;
+}
+
 .nav-links {
     text-align:center;
 }
@@ -67,3 +71,28 @@
 .abcRioButtonContentWrapper {
     background-color: #E91D63 !important;
 }
+
+/* Start society profile */
+
+.banner-img {
+    max-height: 40vh;
+    object-fit: cover;
+}
+.logo-container {
+    margin-top: -75px;
+    margin-left: 10vw;
+    display: flex;
+}
+
+.logo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.logo-name {
+    display: inline-block;
+    align-self: flex-end;
+    margin: 25px;
+}
+
+/* End society profile */
