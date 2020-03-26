@@ -10,14 +10,9 @@ dummy_event = {
             }
 
 def events(request):
-    context = {"title":"Events","events":[]}
-    for event in Event.objects.order_by('date'):
-        context["events"].append({
-            'name':event.name,
-            'description':event.description_short,
-            'img':event.banner,
-            'url':event.slug
-        })
+    search = request.GET.get('search')
+    events = Event.objects.filter(name__icontains=search) if search else Event.objects.order_by('date')
+    context = {"title":"Events","events":[x for x in events]}
     return render(request,'socshare/events.html',context=context)
 
 def calendar(request):
@@ -40,14 +35,7 @@ def profile(request,profile_slug):
         "fullscreen":True, 
         "logo":society.profile,
         "banner_img_url":society.banner, 
-        "events":[]}
-    for event in Event.objects.filter(society=society):
-        context["events"].append({
-            'name':event.name,
-            'description':event.description_short,
-            'img':event.banner,
-            'url':event.slug
-        })
+        "events":Event.objects.filter(society=society)}
     return render(request,'socshare/profile.html',context=context)
 
 def event_page(request,event_slug):
