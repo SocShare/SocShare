@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from socshare.forms import UserForm, SocietyForm
+from socshare.models import Society, Event, Comment
 
 dummy_event = {
                 "name":"Card Title",
@@ -10,8 +11,13 @@ dummy_event = {
 
 def events(request):
     context = {"title":"Events","events":[]}
-    for i in range(10):
-        context["events"].append(dummy_event)
+    for event in Event.objects.all():
+        context["events"].append({
+            'name':event.name,
+            'description':event.description[:200],
+            'img':'test.png',
+            'url':event.slug
+        })
     return render(request,'socshare/events.html',context=context)
 
 def calendar(request):

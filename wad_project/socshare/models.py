@@ -34,6 +34,11 @@ class Event(models.Model):
     views = models.IntegerField(default=0)
     rating = models.IntegerField(default=0)
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
+    slug = models.SlugField()
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Event, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -42,7 +47,8 @@ class Comment(models.Model):
     content = models.TextField()
     name = models.CharField(max_length=50)
     date = models.DateTimeField(default=timezone.now)
-    # TODO: Change to Google Auth user
+    # TODO: Change to Google Auth user.
+    #       Comments should only be linked to Google users
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
