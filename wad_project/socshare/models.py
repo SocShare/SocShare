@@ -13,7 +13,7 @@ class Society(models.Model):
     slug = models.SlugField()
     website = models.URLField(blank=True)
     profile = models.ImageField(upload_to='profile', default='default.jpg')
-    banner = models.ImageField(upload_to='events_banners', default='test.png')
+    banner = models.ImageField(upload_to='profile_banner', default='default.png')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
@@ -30,15 +30,18 @@ class Event(models.Model):
     name = models.CharField(max_length=255)
     date = models.DateTimeField(default=timezone.now)
     description = models.TextField()
+    description_short = models.TextField()
     location = models.CharField(max_length=30)
     ticket_url = models.URLField()
     views = models.IntegerField(default=0)
     rating = models.IntegerField(default=0)
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
+    banner = models.ImageField(upload_to='event_banner', default='default.png')
     slug = models.SlugField()
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
+        self.description_short = self.description[:200]+"..."
         super(Event, self).save(*args, **kwargs)
 
     def __str__(self):

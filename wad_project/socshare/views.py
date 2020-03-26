@@ -14,8 +14,8 @@ def events(request):
     for event in Event.objects.order_by('date'):
         context["events"].append({
             'name':event.name,
-            'description':event.description[:200],
-            'img':'test.png',
+            'description':event.description_short,
+            'img':event.banner,
             'url':event.slug
         })
     return render(request,'socshare/events.html',context=context)
@@ -40,7 +40,14 @@ def profile(request,profile_slug):
         "fullscreen":True, 
         "logo":society.profile,
         "banner_img_url":society.banner, 
-        "events":Event.objects.filter(society=society)}
+        "events":[]}
+    for event in Event.objects.filter(society=society):
+        context["events"].append({
+            'name':event.name,
+            'description':event.description_short,
+            'img':event.banner,
+            'url':event.slug
+        })
     return render(request,'socshare/profile.html',context=context)
 
 def event_page(request,event_slug):
