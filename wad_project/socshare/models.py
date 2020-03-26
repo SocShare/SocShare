@@ -12,8 +12,8 @@ class Society(models.Model):
     description = models.TextField()
     slug = models.SlugField()
     website = models.URLField(blank=True)
-    profile = models.ImageField(upload_to='profile', default='default.jpg')
-    banner = models.ImageField(upload_to='profile_banner', default='default.png')
+    profile = models.ImageField(upload_to='profile', default='profile/default.jpg')
+    banner = models.ImageField(upload_to='profile_banner', default='profile_banner/default.png')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
@@ -36,7 +36,7 @@ class Event(models.Model):
     views = models.IntegerField(default=0)
     rating = models.IntegerField(default=0)
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
-    banner = models.ImageField(upload_to='event_banner', default='default.png')
+    banner = models.ImageField(upload_to='event_banner', default='event_banner/default.png')
     slug = models.SlugField()
 
     def save(self, *args, **kwargs):

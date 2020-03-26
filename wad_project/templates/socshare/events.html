@@ -11,7 +11,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{ e.name }}</h5>
                 <p class="card-text">{{ e.description_short }}</p>
-                <a href="/events/{{ e.slug }}" class="btn btn-primary color-main">Read More</a>
+                <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Read More</a>
             </div>
         </div>
     </div>

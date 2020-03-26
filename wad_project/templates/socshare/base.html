@@ -29,8 +29,12 @@
                     <li><a href="{% url 'socshare:events' %}">Events</a></li>
                     <li><a href="{% url 'socshare:calendar' %}">Calendar</a></li>
                     <li><a href="{% url 'socshare:profile' 'test' %}">Societies</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'socshare:logout' %}">Logout</a></li>
+                    {% else %}
                     <li><a href="{% url 'socshare:login' %}">Login</a></li>
                     <li><a href="{% url 'socshare:register' %}">Register</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         

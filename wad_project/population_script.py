@@ -100,8 +100,8 @@ def add_user(name,email,society=None):
 def add_society(name,acronym,events,user,profile=None,banner=None):
     society = Society.objects.get_or_create(name=name, user=user)[0]
     society.acronym = acronym
-    society.profile = profile or 'profile/default.jpg'
-    society.banner = banner or 'profile_banner/default.png'
+    if profile: society.profile = profile 
+    if banner: society.banner = banner
     society.save()
     events = [add_event(x['name'],x['description'],x['date'],society,banner=x.get('banner')) for x in events]
     return society
@@ -110,7 +110,7 @@ def add_event(name,description,date,society,banner=None):
     event = Event.objects.get_or_create(name=name,society=society)[0]
     event.description = description
     event.date = date
-    event.banner = banner or 'event_banner/default.png'
+    if banner: event.banner = banner
     event.save()
     for comment in comments:
         add_comment(comment['content'],event)
