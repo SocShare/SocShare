@@ -11,7 +11,7 @@ dummy_event = {
 
 def events(request):
     context = {"title":"Events","events":[]}
-    for event in Event.objects.all():
+    for event in Event.objects.order_by('date'):
         context["events"].append({
             'name':event.name,
             'description':event.description[:200],
