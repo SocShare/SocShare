@@ -12,7 +12,8 @@ class Society(models.Model):
     description = models.TextField()
     slug = models.SlugField()
     website = models.URLField(blank=True)
-    picture = models.ImageField(upload_to='profile', blank=True)
+    profile = models.ImageField(upload_to='profile', default='default.jpg')
+    banner = models.ImageField(upload_to='events_banners', default='test.png')
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):

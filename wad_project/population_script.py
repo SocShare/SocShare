@@ -17,6 +17,8 @@ comments = [
 def populate():
     gusec = {'name':'Glasgow University Security Society',
         'acronym':'GUSEC',
+        'profile':'logo_blue.png',
+        'banner':'matrix.png',
         'events':[{'name':'Hackerspace',
                 'description':'A place to learn hacking a chill!',
                 'date':datetime.datetime(2020, 5, 17, 17, 30)
@@ -24,6 +26,8 @@ def populate():
         }
     guts = {'name':'Glasgow University Tech Society',
             'acronym':'GUTS',
+            'profile':'guts.jpg',
+            'banner':'matrix.png',
             'events':[{'name':'Hackathon',
                     'description':'Make some awesome projects and win prizes!',
                     'date':datetime.datetime(2020, 9, 30, 9)
@@ -35,6 +39,7 @@ def populate():
             }
     bms = {'name':'Bad Movie Society',
             'acronym':'BMS',
+            'banner':'Bad-Movie.png',
             'events':[{'name':'Bad Movie Night',
                     'description':'Come watch bad movies with us :)',
                     'date':datetime.datetime(2020, 4, 12, 18)
@@ -61,12 +66,14 @@ def add_user(name,email,society=None):
     user.set_password('password')
     user.save()
     if society:
-        add_society(society['name'],society['acronym'],society['events'],user)
+        add_society(society['name'],society['acronym'],society['events'],user,profile=society.get('profile'),banner=society.get('banner'))
     return user
 
-def add_society(name,acronym,events,user):
+def add_society(name,acronym,events,user,profile=None,banner=None):
     society = Society.objects.get_or_create(name=name, user=user)[0]
     society.acronym = acronym
+    society.profile = profile or 'default.jpg'
+    society.banner = banner or 'test.png'
     society.save()
     events = [add_event(x['name'],x['description'],x['date'],society) for x in events]
     return society

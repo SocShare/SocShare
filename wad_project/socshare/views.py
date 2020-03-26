@@ -34,7 +34,13 @@ def dashboard(request):
 
 def profile(request,profile_slug):
     society = Society.objects.get(slug=profile_slug)
-    context = {"title":society.acronym.upper()+" Profile", "fullscreen":True, "banner_img_url":"test.png", "events":Event.objects.filter(society=society)}
+    context = {
+        "title":society.acronym.upper()+" Profile",
+        "name":society.name,
+        "fullscreen":True, 
+        "logo":society.profile,
+        "banner_img_url":society.banner, 
+        "events":Event.objects.filter(society=society)}
     return render(request,'socshare/profile.html',context=context)
 
 def event_page(request,event_slug):
