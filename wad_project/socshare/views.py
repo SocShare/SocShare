@@ -1,24 +1,41 @@
 from django.shortcuts import render
 from socshare.forms import UserForm, SocietyForm
-
-dummy_event = {
-                "name":"Card Title",
-                "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum sem risus, suscipit et commodo sed, viverra nec erat. Donec at tellus nec massa elementum posuere ac et turpis. Aliquam tristique lectus at congue fringilla. Donec et nibh eu leo gravida molestie.",
-                "img":"test.png",
-                "url":"Test"
-            }
+from socshare.models import Society, Event, Comment
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse
+from django.shortcuts import redirect
 
 def events(request):
-    context = {"title":"Events","events":[]}
-    for i in range(10):
-        context["events"].append(dummy_event)
+    search = request.GET.get('search')
+    events = Event.objects.filter(name__icontains=search) if search else Event.objects.order_by('date')
+    context = {"title":"Events","events":[x for x in events]}
     return render(request,'socshare/events.html',context=context)
 
 def calendar(request):
     return render(request,'socshare/calendar.html')
 
-def login(request):
+def login_page(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        if User.objects.filter(email=email).count()>=1:
+            user = authenticate(username=User.objects.get(email=email).username, password=password)
+            if user:
+                if user.is_active:
+                    login(request, user)
+                    print('Logged in to '+user.society.name)
+                    return redirect(reverse('socshare:events'))
+            else:
+                print('Password wrong')
+        else:
+            print('Email does not exist')
+
     return render(request,'socshare/login.html',context={"title":"Login"})
+
+def logout_page(request):
+    logout(request)
+    return redirect(reverse('socshare:events'))
 
 def register(request):
     return render(request,'socshare/register.html')
@@ -27,9 +44,14 @@ def dashboard(request):
     return render(request,'socshare/dashboard.html')
 
 def profile(request,profile_slug):
-    context = {"title":"Society Profile", "fullscreen":True, "banner_img_url":"test.png", "events":[]}
-    for i in range(4):
-        context["events"].append(dummy_event)
+    society = Society.objects.get(slug=profile_slug)
+    context = {
+        "title":society.acronym.upper()+" Profile",
+        "name":society.name,
+        "fullscreen":True, 
+        "logo":society.profile,
+        "banner_img_url":society.banner, 
+        "events":Event.objects.filter(society=society)}
     return render(request,'socshare/profile.html',context=context)
 
 def event_page(request,event_slug):
