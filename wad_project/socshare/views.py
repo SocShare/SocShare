@@ -44,16 +44,18 @@ def register(request):
         acronym = request.POST.get('acronym')
         if password == verify:
             if check_email(email):
-                username = slugify(name)
-                user = User.objects.get_or_create(username=username)[0]
-                user.email = email
-                user.set_password(password)
-                user.save()
-                society = Society.objects.get_or_create(name=name, user=user)[0]
-                society.acronym = acronym
-                society.save()
-                login(request, user)
-                return redirect(reverse('socshare:events'))
+                if User.objects.filter(email=email).count()==0:
+                    username = slugify(name)
+                    user = User.objects.get_or_create(username=username)[0]
+                    user.email = email
+                    user.set_password(password)
+                    user.save()
+                    society = Society.objects.get_or_create(name=name, user=user)[0]
+                    society.acronym = acronym
+                    society.save()
+                    login(request, user)
+                    return redirect(reverse('socshare:events'))
+                return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'An account is already registered with this email address!'})
             else:
                 return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'Account not registered with SRC!'})
         else:
