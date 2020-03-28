@@ -88,7 +88,7 @@ def user_profile(request):
             "events":Event.objects.filter(society=society)
         }
         return render(request,'socshare/profile.html',context=context)
-    return redirect(reverse('socshare:events'))
+    return redirect(reverse('socshare:login'))
 
 def event_page(request,event_slug):
     return render(request,'socshare/event.html')
