@@ -52,7 +52,6 @@ def register(request):
                 society = Society.objects.get_or_create(name=name, user=user)[0]
                 society.acronym = acronym
                 society.save()
-                print('Successfully created user')
                 login(request, user)
                 return redirect(reverse('socshare:events'))
             else:
@@ -74,6 +73,20 @@ def profile(request,profile_slug):
         "banner_img_url":society.banner, 
         "events":Event.objects.filter(society=society)}
     return render(request,'socshare/profile.html',context=context)
+
+def user_profile(request):
+    if request.user.is_authenticated:
+        society = request.user.society
+        context = {
+            "title":society.acronym.upper()+" Profile",
+            "name":society.name,
+            "fullscreen":True, 
+            "logo":society.profile,
+            "banner_img_url":society.banner, 
+            "events":Event.objects.filter(society=society)
+        }
+        return render(request,'socshare/profile.html',context=context)
+    return redirect(reverse('socshare:events'))
 
 def event_page(request,event_slug):
     return render(request,'socshare/event.html')
