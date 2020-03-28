@@ -2,9 +2,52 @@
 {% load static %}
 
 {% block title %}
-Test
+Register
 {% endblock %}
 
 {% block container %}
-<b>Body</b>
+<div class="row flex-vert-center flex-grow justify-content-center">
+    <div class = 'registerBody'>
+        <div class="col-auto text-center">
+            {% if alert %}
+            <div class="alert alert-{{ alert }}" role="alert">
+                {{ alert_msg }}
+            </div>
+            {% endif %}
+            <div class="card" >
+                <div class="card-body">
+                    <form action="{% url 'socshare:register' %}" method="POST">
+                        {% csrf_token %}
+                        <h2 class="card-title text-center" style="padding-bottom: 20px;">Register your society</h2>
+                        <!-- Society Email -->
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                        </div>
+                        <!-- Society Name -->
+                        <div class="form-group">
+                            <label for="societyName">Society Name</label>
+                            <input name="name" type="text"  class="form-control" id="formGroupExampleInput" aria-describedby="societyName">
+                        </div>
+                        <!-- Society Acronym - This can be used for event cards-->
+                        <div class="form-group">
+                            <label for="soceityAcronym">Society Acronym</label>
+                            <input name="acronym" type="text"  class="form-control" id="formGroupExampleInput" aria-describedby="soceityAcronym">
+                        </div>
+                        <!-- Society Password - This will need to be done properly in the backend. -->
+                        <div class="form-group">
+                            <label for="passwordInput">Password</label>
+                            <input name="password" type="password" class="form-control" id="passwordInput">
+                        </div>
+                        <div class="form-group">
+                            <label for="verifyPasswordInput">Retype the password</label>
+                            <input name="verify" type="password" class="form-control" id="verifyPasswordInput">
+                        </div>
+                            <button type="register" class="btn btn-primary color-main">Register</button>
+                    </form>
+                 </div>
+            </div>
+        </div>
+    </div>    
+</div>
 {% endblock %}
