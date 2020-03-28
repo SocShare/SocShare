@@ -26,12 +26,8 @@ def login_page(request):
             if user:
                 if user.is_active:
                     login(request, user)
-                    print('Logged in to '+user.society.name)
                     return redirect(reverse('socshare:events'))
-            else:
-                print('Password wrong')
-        else:
-            print('Email does not exist')
+        return render(request,'socshare/login.html',context={'alert':'danger','alert_msg':'Email/password is incorrect!'})
 
     return render(request,'socshare/login.html',context={"title":"Login"})
 
@@ -60,10 +56,9 @@ def register(request):
                 login(request, user)
                 return redirect(reverse('socshare:events'))
             else:
-                print('Society not found on SRC')
+                return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'Account not registered with SRC!'})
         else:
-            print('Password doesn\'t match')
-        
+            return render(request,'socshare/register.html',context={'alert':'danger','alert_msg':'Passwords do not match!'})
     return render(request,'socshare/register.html')
 
 def dashboard(request):

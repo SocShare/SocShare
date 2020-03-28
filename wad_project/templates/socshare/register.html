@@ -9,6 +9,11 @@ Register
 <div class="row flex-vert-center flex-grow justify-content-center">
     <div class = 'registerBody'>
         <div class="col-auto text-center">
+            {% if alert %}
+            <div class="alert alert-{{ alert }}" role="alert">
+                {{ alert_msg }}
+            </div>
+            {% endif %}
             <div class="card" >
                 <div class="card-body">
                     <form action="{% url 'socshare:register' %}" method="POST">
