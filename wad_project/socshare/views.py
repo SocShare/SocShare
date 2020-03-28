@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.shortcuts import redirect
+from socshare.utils.src import check_email
+from django.template.defaultfilters import slugify
 
 def events(request):
     search = request.GET.get('search')
@@ -38,6 +40,30 @@ def logout_page(request):
     return redirect(reverse('socshare:events'))
 
 def register(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        verify = request.POST.get('verify')
+        name = request.POST.get('name')
+        acronym = request.POST.get('acronym')
+        if password == verify:
+            if check_email(email):
+                username = slugify(name)
+                user = User.objects.get_or_create(username=username)[0]
+                user.email = email
+                user.set_password(password)
+                user.save()
+                society = Society.objects.get_or_create(name=name, user=user)[0]
+                society.acronym = acronym
+                society.save()
+                print('Successfully created user')
+                login(request, user)
+                return redirect(reverse('socshare:events'))
+            else:
+                print('Society not found on SRC')
+        else:
+            print('Password doesn\'t match')
+        
     return render(request,'socshare/register.html')
 
 def dashboard(request):
