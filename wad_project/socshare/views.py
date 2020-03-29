@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from socshare.utils.src import check_email
 from django.template.defaultfilters import slugify
+from django.db.models.functions.datetime import datetime
 
 def events(request):
     search = request.GET.get('search')
@@ -45,17 +46,19 @@ def register(request):
         if password == verify:
             if check_email(email):
                 if User.objects.filter(email=email).count()==0:
-                    username = slugify(name)
-                    user = User.objects.get_or_create(username=username)[0]
-                    user.email = email
-                    user.set_password(password)
-                    user.save()
-                    society = Society.objects.get_or_create(name=name, user=user)[0]
-                    society.acronym = acronym
-                    society.save()
-                    login(request, user)
-                    return redirect(reverse('socshare:events'))
-                return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'An account is already registered with this email address!'})
+                    return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'An account is already registered with this email address!'})
+                if Society.objects.filter(acronym=acronym).count()==0:
+                    return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'Another society already has this acronym!'})
+                username = slugify(name)
+                user = User.objects.get_or_create(username=username)[0]
+                user.email = email
+                user.set_password(password)
+                user.save()
+                society = Society.objects.get_or_create(name=name, user=user)[0]
+                society.acronym = acronym
+                society.save()
+                login(request, user)
+                return redirect(reverse('socshare:events'))
             else:
                 return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'Account not registered with SRC!'})
         else:
@@ -63,7 +66,43 @@ def register(request):
     return render(request,'socshare/register.html')
 
 def dashboard(request):
-    return render(request,'socshare/dashboard.html')
+    if request.user.is_authenticated:
+        events = Event.objects.filter(society=request.user.society)
+        return render(request,'socshare/dashboard.html',context={'events':events})
+    return redirect(reverse('socshare:events'))
+
+def add_event(request):
+    if request.user.is_authenticated:
+        if request.method=='POST':
+            name=request.POST.get('name')
+            date=request.POST.get('date')
+            time=request.POST.get('time')
+            location=request.POST.get('location')
+            url=request.POST.get('url')
+            description=request.POST.get('description')
+            date=datetime.strptime(date+' '+time,'%Y-%m-%d %H:%M')
+            event = Event.objects.get_or_create(name=name,society=request.user.society)[0]
+            event.description=description
+            event.date=date
+            event.ticket_url=url
+            event.society=request.user.society
+            event.location=location
+            banner=request.FILES.get('banner')
+            if banner:
+                event.banner=banner
+            event.save()
+            return redirect(reverse('socshare:dashboard'))
+    return redirect(reverse('socshare:events'))
+
+def remove_event(request,event_slug):
+    if request.user.is_authenticated:
+        event=Event.objects.filter(slug=event_slug)
+        if event.count()>0:
+            event=event[0]
+            if request.user.society == event.society:
+                event.delete()
+        return redirect(reverse('socshare:dashboard'))
+    return redirect(reverse('socshare:events'))
 
 def profile(request,profile_slug):
     society = Society.objects.get(slug=profile_slug)

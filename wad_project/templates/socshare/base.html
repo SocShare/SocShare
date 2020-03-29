@@ -8,6 +8,8 @@
         <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
         <!-- Link our own stylesheet -->
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <!-- Include Bootstrap js functions -->
         <script src="{% static 'js/bootstrap.min.js' %}"></script>
         <!-- <script src="https://kit.fontawesome.com/09e69acc6e.js" crossorigin="anonymous" async defer></script> -->
@@ -31,6 +33,7 @@
                     <li><a href="{% url 'socshare:profile' 'test' %}">Societies</a></li>
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'socshare:user_profile' %}">Profile</a></li>
+                    <li><a href="{% url 'socshare:dashboard' %}">Dashboard</a></li>
                     <li><a href="{% url 'socshare:logout' %}">Logout</a></li>
                     {% else %}
                     <li><a href="{% url 'socshare:login' %}">Login</a></li>

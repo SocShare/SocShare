@@ -39,6 +39,12 @@ class Event(models.Model):
     banner = models.ImageField(upload_to='event_banner', default='event_banner/default.png')
     slug = models.SlugField()
 
+    def delete(self, *args, **kwargs):
+        if self.banner:
+            if not 'default' in self.banner.url:
+                self.banner.delete()
+        super(Event, self).delete(*args, **kwargs)
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         self.description_short = self.description[:200]+"..."

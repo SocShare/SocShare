@@ -2,9 +2,201 @@
 {% load static %}
 
 {% block title %}
-Test
+Dashboard
 {% endblock %}
 
+<!-- Problems with this page
+        1. This page isnt passing the profile for the SOC in views.py like the profile page does. 
+            if that can get working it should be easier to just modify the page :) -->
+
 {% block container %}
-<b>Body</b>
+<table class="table table-borderless">
+    <!-- Manage Events Row -->
+    <h1><center>Society Dashboard</center></h1>
+    <tr>
+        <h2>Manage Event</h2>
+        <br>
+        <div class="row row-cols-md-1 row-cols-lg-2 row-cols-xl-3 flex-grow">
+            {% if events %}
+            {% for e in events %}
+            <div class="col mb-4">
+                <div class="card">
+                    <img src="{{ MEDIA_URL }}{{ e.banner }}" class="card-img-top" alt="Card image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ e.name }}</h5>
+                        <p class="card-text">{{ e.description_short }}</p>
+                        <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Read More</a>
+                        <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Edit</a>
+                        <a href="{% url 'socshare:dashboard' %}remove_event/{{ e.slug }}" class="btn btn-primary color-main">Remove</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <strong>You don't have any events</strong>
+            {% endif %}
+        </div>
+    <hr width="85%">
+    </tr>
+    <!-- Create Events -->
+    <tr>
+        <br>
+        <div class="row">
+            <div class="col-sm-7">
+                <h2>Create Event</h2>
+            </div>
+            <div class="col-sm-4">
+                <br>
+                <h4>Live View</h4>
+            </div>
+        </div>
+        <br>
+        <!-- 3 coloums -->
+        <div class="row">
+            <div class="col-sm-6">
+                <!-- First coloum Form  -->
+                <form action="{% url 'socshare:add_event' %}" method='POST' enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <!-- First Row -->
+                    <div class="form-group">
+                      <input name="name" type="text" class="form-control" id="nameInput" placeholder="Event Name">
+                    </div>
+                    <!-- Second Row -->
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">  
+                                <input name="date" type="date" class="form-control" id="dateInput" placeholder="Date">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input name="time" type="time" class="form-control" id="timeInput" placeholder="Time">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input name="location" type="text" class="form-control" id="locationInput" placeholder="Location">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Third Row -->
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input name="url" type="url" class="form-control" id="urlInput" placeholder="Tickets URL">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group">
+                                <div class="custom-file">
+                                  <input name="banner" type="file" class="custom-file-input" id="inputGroupFile01"
+                                    aria-describedby="inputGroupFileAddon01">
+                                  <label class="custom-file-label" for="inputGroupFile01">Banner Image</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fourth Row - Description -->
+                    <div class="form-group">
+                        <textarea name="description" class="form-control" id="descriptionInput" rows="8" placeholder="Event Description"></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Create Event</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Live view card - Ryan take a look at this too -->
+            <div class="col-sm-1"></div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <img src="{{ MEDIA_URL }}/event_banner/default.png" class="card-img-top" alt="Card image">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <h5 id="live-name" class="card-title">Event Name</h5>
+                            </div>
+                        </div>
+                        <p id="live-desc" class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Text text blah ...</p>
+                        <!-- This button does litreally nothing for live view -->
+                        <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $('#nameInput').change(function() {
+                    $('#live-name').text($('#nameInput').val());
+                });
+                $('#descriptionInput').change(function() {
+                    $('#live-desc').text($('#descriptionInput').val().substring(0,200)+'...');
+                });
+            </script>
+        </div>
+        <hr width="85%">
+    </tr>
+    <!-- Soceity Settings -->
+    <tr>
+        <br>
+        <h2> Society Settings </h2> 
+        <br>
+        <!-- This fourm needs to be mereged with the views.py, I couldnt get it working. -->
+        <form>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="changeName" >Change Soceity Name </label>
+                        <input name="changeName" type="text" class="form-control" id="changeName" placeholder="{{ name }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="changePassword" >Change Soceity Password</label>
+                        <input name="changePassword" type="password" class="form-control" id="changePassword" placeholder="New Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="changePassword2" >Verify Soceity Password</label>
+                        <input name="changePassword2" type="password" class="form-control" id="changePassword2" placeholder="Verify Password">
+                    </div>
+                </div>
+                <div class = "col-sm-3">
+                    <div class="form-group">
+                        <label for="changeAcronym" >Change Soceity Acronym </label>
+                        <input name="changeAcronym" type="text" class="form-control" id="changeAcronym" placeholder="{{ acronym }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="changeEmail" >Change Soceity Email </label>
+                        <input name="changeEmail" type="email" class="form-control" id="changeEmail" placeholder="{{ email }}">
+                    </div>
+                    <br>
+                    <div>
+                        <center><button type="button" class="btn btn-primary" >Confirm Changes</button></center>
+                    </div>
+                </div>
+                <div class = "col-sm-6">
+                    <br>
+                    <!-- This should edit Profile Picture -->
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="inputGroupFile02"
+                            aria-describedby="inputGroupFileAddon02">
+                          <label class="custom-file-label" for="inputGroupFile02">Choose Profile Picture</label>
+                        </div>
+                    </div>
+                    <!-- This should edit Banner -->
+                    <br>
+                    <br>             
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroupFileAddon03">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="inputGroupFile03"
+                            aria-describedby="inputGroupFileAddon03">
+                          <label class="custom-file-label" for="inputGroupFile03">Choose Profile Banner</label>
+                        </div>
+                    </div>
+                </div>
+        </form>
+    </tr>
+</table>
 {% endblock %}
