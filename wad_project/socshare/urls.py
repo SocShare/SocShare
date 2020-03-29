@@ -15,5 +15,6 @@ urlpatterns = [
     path('profile/<slug:profile_slug>', views.profile, name='profile'),
     path('profile/', views.user_profile, name='user_profile'),
     path('test/', views.test, name='test'),
-    path('logout/', views.logout_page, name='logout')
+    path('logout/', views.logout_page, name='logout'),
+    path('dashboard/add_event', views.add_event, name='add_event')
 ]

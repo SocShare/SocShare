@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from socshare.utils.src import check_email
 from django.template.defaultfilters import slugify
+from django.db.models.functions.datetime import datetime
 
 def events(request):
     search = request.GET.get('search')
@@ -64,7 +65,29 @@ def register(request):
 
 def dashboard(request):
     if request.user.is_authenticated:
-        return render(request,'socshare/dashboard.html')
+        events = Event.objects.filter(society=request.user.society)
+        return render(request,'socshare/dashboard.html',context={'events':events})
+    return redirect(reverse('socshare:events'))
+
+def add_event(request):
+    if request.user.is_authenticated:
+        if request.method=='POST':
+            name=request.POST.get('name')
+            date=request.POST.get('date')
+            time=request.POST.get('time')
+            location=request.POST.get('location')
+            url=request.POST.get('url')
+            description=request.POST.get('description')
+            date=datetime.strptime(date+' '+time,'%Y-%m-%d %H:%M')
+            event = Event.objects.get_or_create(name=name,society=request.user.society)[0]
+            event.description=description
+            event.date=date
+            event.ticket_url=url
+            event.society=request.user.society
+            event.location=location
+            event.banner=request.FILES['banner']
+            event.save()
+            return redirect(reverse('socshare:user_profile'))
     return redirect(reverse('socshare:events'))
 
 def profile(request,profile_slug):
