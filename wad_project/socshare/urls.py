@@ -16,5 +16,6 @@ urlpatterns = [
     path('profile/', views.user_profile, name='user_profile'),
     path('test/', views.test, name='test'),
     path('logout/', views.logout_page, name='logout'),
-    path('dashboard/add_event', views.add_event, name='add_event')
+    path('dashboard/add_event', views.add_event, name='add_event'),
+    path('dashboard/remove_event/<slug:event_slug>', views.remove_event, name='remove_event')
 ]

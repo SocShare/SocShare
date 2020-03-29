@@ -85,9 +85,21 @@ def add_event(request):
             event.ticket_url=url
             event.society=request.user.society
             event.location=location
-            event.banner=request.FILES['banner']
+            banner=request.FILES.get('banner')
+            if banner:
+                event.banner=banner
             event.save()
             return redirect(reverse('socshare:user_profile'))
+    return redirect(reverse('socshare:events'))
+
+def remove_event(request,event_slug):
+    if request.user.is_authenticated:
+        event=Event.objects.filter(slug=event_slug)
+        if event.count()>0:
+            event=event[0]
+            if request.user.society == event.society:
+                event.delete()
+        return redirect(reverse('socshare:dashboard'))
     return redirect(reverse('socshare:events'))
 
 def profile(request,profile_slug):

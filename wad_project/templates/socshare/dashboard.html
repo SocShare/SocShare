@@ -27,6 +27,7 @@ Dashboard
                         <p class="card-text">{{ e.description_short }}</p>
                         <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Read More</a>
                         <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Edit</a>
+                        <a href="{% url 'socshare:dashboard' %}remove_event/{{ e.slug }}" class="btn btn-primary color-main">Remove</a>
                     </div>
                 </div>
             </div>
