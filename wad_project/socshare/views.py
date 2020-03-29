@@ -45,9 +45,9 @@ def register(request):
         acronym = request.POST.get('acronym')
         if password == verify:
             if check_email(email):
-                if User.objects.filter(email=email).count()==0:
+                if User.objects.filter(email=email).count()!=0:
                     return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'An account is already registered with this email address!'})
-                if Society.objects.filter(acronym=acronym).count()==0:
+                if Society.objects.filter(acronym=acronym).count()!=0:
                     return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'Another society already has this acronym!'})
                 username = slugify(name)
                 user = User.objects.get_or_create(username=username)[0]
