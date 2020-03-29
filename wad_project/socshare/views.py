@@ -13,6 +13,8 @@ def events(request):
     search = request.GET.get('search')
     events = Event.objects.filter(name__icontains=search) if search else Event.objects.order_by('date')
     context = {"title":"Events","events":[x for x in events]}
+    if search:
+        context['search']=search
     return render(request,'socshare/events.html',context=context)
 
 def calendar(request):
