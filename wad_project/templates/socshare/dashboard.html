@@ -2,9 +2,208 @@
 {% load static %}
 
 {% block title %}
-Test
+Dashboard
 {% endblock %}
 
+<!-- Problems with this page
+        1. This page isnt passing the profile for the SOC in views.py like the profile page does. 
+            if that can get working it should be easier to just modify the page :) -->
+
 {% block container %}
-<b>Body</b>
+<table class="table table-borderless">
+    <!-- Manage Events Row -->
+    <h1><centre>Society Dashboard</centre></h1>
+    <tr>
+        <h2>Manage Event</h2>
+        <br>
+        <div class="row row-cols-md-1 row-cols-lg-2 row-cols-xl-3 flex-grow">
+            {% if events %}
+            {% for e in events %}
+            <div class="col mb-4">
+                <div class="card">
+                    <img src="{{ MEDIA_URL }}{{ e.banner }}" class="card-img-top" alt="Card image">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h5 class="card-title">{{ e.name }}</h5>
+                            </div>
+                            <div class="col-sm-6">
+                                <h5 class="card-title">{{ e.date }}</h5>
+                            </div>                            
+                        </div>
+                        <!-- Event Details -->
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h5> Views : {{ e.views }} </h5>
+                            </div>
+                        </div>
+                        <p class="card-text">{{ e.description_short }}</p>
+                        <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Read More</a>
+                        <!-- This should redirect to the edit page hence needs to be changed-->
+                        <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Edit</a>
+                        
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <strong>You don't have any events</strong>
+            {% endif %}
+        </div>
+    <hr width="85%">
+    </tr>
+    <!-- Create Events -->
+    <tr>
+        <br>
+        <h2> Create Event </h2> 
+        <br>
+        <!-- 3 coloums -->
+        <div class="row">
+            <div class="col-sm-6">
+                <!-- First coloum Form  -->
+                <form >
+                    <!-- First Row -->
+                    <div class="form-group">
+                      <input name="eventName" type="text" class="form-control" id="formGroupExampleInput" placeholder="Event Name">
+                    </div>
+                    <!-- Second Row -->
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">  
+                                <input name="eventDate" type="date" class="form-control" id="example-date-input" placeholder="Date">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input name="eventTime" type="time" class="form-control" id="example-time-input" placeholder="Time">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input name="eventLocation" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Location">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Third Row -->
+                    <div class="form-group">
+                        <input name="eventURL" type="url" class="form-control" id="example-url-input" placeholder="Tickets URL">
+                    </div>
+                    <!-- Fourth Row - Description -->
+                    <div class="form-group">
+                        <textarea name = "eventDescription" class="form-control" id="exampleTextarea" rows="8" placeholder="Event Description"></textarea>
+                    </div>
+                </form>
+            </div>
+            <!-- Second coloum Form - Ryan take a look at this, kinda outta my understanding for now :) -->
+            <div class="col-sm-3">
+                <form>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="inputGroupFile01"
+                            aria-describedby="inputGroupFileAddon01">
+                          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <textarea name = "bannerDescription" class="form-control" id="exampleTextarea" rows="12" placeholder="Event Description"></textarea>
+                    </div>
+                
+            </div>
+            <!-- Live view card - Ryan take a look at this too -->
+            <div class="col-sm-3">
+                <div class="card">
+                    <img src="{{ MEDIA_URL }}{{ e.banner }}" class="card-img-top" alt="Card image">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <h5 class="card-title">{{ e.name }}</h5>
+                            </div>
+                            <div class="col-sm">
+                                <h5 class="card-title">{{ e.date }}</h5>
+                            </div>
+                        </div>
+                        <p class="card-text">{{ e.description_short }}</p>
+                        <!-- This button does litreally nothing for live view -->
+                        <a class="btn btn-primary color-main">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Submit Button - This needs to be registered with the other stuff :) -->
+                <div>
+                    <center><button type="button" class="btn btn-primary btn-lg btn-block" >Create Event</button></center>
+                </div>
+            </form>
+        <hr width="85%">
+    </tr>
+    <!-- Soceity Settings -->
+    <tr>
+        <br>
+        <h2> Society Settings </h2> 
+        <br>
+        <!-- This fourm needs to be mereged with the views.py, I couldnt get it working. -->
+        <form>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="formGroupExampleInput" >Change Soceity Name </label>
+                        <input name="changeName" type="text" class="form-control" id="formGroupExampleInput" placeholder="{{ name }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput" >Change Soceity Password</label>
+                        <input name="changePassword" type="password" class="form-control" id="formGroupExampleInput" placeholder="New Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput" >Verify Soceity Password</label>
+                        <input name="changePassword2" type="password" class="form-control" id="formGroupExampleInput" placeholder="Verify Password">
+                    </div>
+                </div>
+                <div class = "col-sm-3">
+                    <div class="form-group">
+                        <label for="formGroupExampleInput" >Change Soceity Acronym </label>
+                        <input name="changeAcronym" type="text" class="form-control" id="formGroupExampleInput" placeholder="{{ acronym }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput" >Change Soceity Email </label>
+                        <input name="changeEmail" type="email" class="form-control" id="formGroupExampleInput" placeholder="{{ email }}">
+                    </div>
+                    <br>
+                    <div>
+                        <center><button type="button" class="btn btn-primary" >Confirm Changes</button></center>
+                    </div>
+                </div>
+                <div class = "col-sm-6">
+                    <br>
+                    <!-- This should edit Profile Picture -->
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="inputGroupFile01"
+                            aria-describedby="inputGroupFileAddon01">
+                          <label class="custom-file-label" for="inputGroupFile01">Choose Profile Picture</label>
+                        </div>
+                    </div>
+                    <!-- This should edit Banner -->
+                    <br>
+                    <br>             
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="inputGroupFile01"
+                            aria-describedby="inputGroupFileAddon01">
+                          <label class="custom-file-label" for="inputGroupFile01">Choose Profile Banner</label>
+                        </div>
+                    </div>
+                </div>
+        </form>
+    </tr>
+</table>
 {% endblock %}

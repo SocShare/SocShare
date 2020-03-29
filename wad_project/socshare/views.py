@@ -63,7 +63,9 @@ def register(request):
     return render(request,'socshare/register.html')
 
 def dashboard(request):
-    return render(request,'socshare/dashboard.html')
+    if request.user.is_authenticated:
+        return render(request,'socshare/dashboard.html')
+    return redirect(reverse('socshare:events'))
 
 def profile(request,profile_slug):
     society = Society.objects.get(slug=profile_slug)
