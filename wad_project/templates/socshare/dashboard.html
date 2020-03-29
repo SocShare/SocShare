@@ -127,7 +127,7 @@ Dashboard
                     $('#live-name').text($('#nameInput').val());
                 });
                 $('#descriptionInput').change(function() {
-                    $('#live-desc').text($('#descriptionInput').val());
+                    $('#live-desc').text($('#descriptionInput').val().substring(0,200)+'...');
                 });
             </script>
         </div>

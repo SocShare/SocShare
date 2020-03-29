@@ -89,7 +89,7 @@ def add_event(request):
             if banner:
                 event.banner=banner
             event.save()
-            return redirect(reverse('socshare:user_profile'))
+            return redirect(reverse('socshare:dashboard'))
     return redirect(reverse('socshare:events'))
 
 def remove_event(request,event_slug):
