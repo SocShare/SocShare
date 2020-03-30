@@ -20,6 +20,7 @@ def populate():
         'profile':'profile/logo_blue.png',
         'banner':'profile_banner/matrix.png',
         'events':[{'name':'Hackerspace',
+                'location':'55.873921, -4.291174',
                 'description':'''
                 Come along to our weekly hacking socials, anyone is welcome – even if you’ve never touched a computer before. A hackerspace is a place where you can work on your projects, chat with others, make new things and learn. 
 There are no official workshops, lectures or talks going on (although we may have the occasional guest speaker in), so feel free to show up and do your own thing or we can give you some challenges and point you in the right direction. 
@@ -48,6 +49,7 @@ The first batch of tickets will go live at 19th of September, 1700.
 
 For further information and a peek at our previous hacks,visit gutechsoc.com/hackathon.
                     ''',
+                    'location':'55.873935, -4.292079',
                     'date':datetime.datetime(2020, 9, 30, 9)
                     },
                     {'name':'Hacker Olympics',
@@ -103,14 +105,15 @@ def add_society(name,acronym,events,user,profile=None,banner=None):
     if profile: society.profile = profile 
     if banner: society.banner = banner
     society.save()
-    events = [add_event(x['name'],x['description'],x['date'],society,banner=x.get('banner')) for x in events]
+    events = [add_event(x['name'],x['description'],x['date'],society,banner=x.get('banner'),location=x.get('location')) for x in events]
     return society
 
-def add_event(name,description,date,society,banner=None):
+def add_event(name,description,date,society,banner=None,location=None):
     event = Event.objects.get_or_create(name=name,society=society)[0]
     event.description = description
     event.date = date
     if banner: event.banner = banner
+    if location: event.location = location
     event.save()
     for comment in comments:
         add_comment(comment['content'],event)

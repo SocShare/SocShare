@@ -38,7 +38,9 @@ def soceity(request):
     return render(request, 'socshare/society.html', context)
 
 def calendar(request):
-    return render(request,'socshare/calendar.html',context={"title":"Calendar"})
+    events = Event.objects.order_by('date')
+    context = {"title":"Calendar","events":[x for x in events]}
+    return render(request,'socshare/calendar.html', context=context)
 
 def login_page(request):
     if request.method == 'POST':
