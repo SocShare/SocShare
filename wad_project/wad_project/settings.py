@@ -29,8 +29,13 @@ MEDIA_URL = '/media/'
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'h8m5o)8vv&vtm69$kcxo1-9i21%87=vb=$t%42cc^np-u^bb4@'
 
+# This tell us if we are in production or not
+PROD = False
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = not PROD
+
+
 
 ALLOWED_HOSTS = []
 
