@@ -7,7 +7,7 @@ app_name = 'socshare'
 urlpatterns = [
     path('', views.events, name='index'),
     path('events/', views.events, name='events'),
-    path('events/<slug:event_slug>', views.event_page, name='event_page'),
+    path('events/<slug:event_slug>', views.event_page, name='eventPage'),
     path('calendar/', views.calendar, name='calendar'),
     path('login/', views.login_page, name='login'),
     path('register/', views.register, name='register'),
@@ -17,5 +17,6 @@ urlpatterns = [
     path('test/', views.test, name='test'),
     path('logout/', views.logout_page, name='logout'),
     path('dashboard/add_event', views.add_event, name='add_event'),
-    path('dashboard/remove_event/<slug:event_slug>', views.remove_event, name='remove_event')
+    path('dashboard/remove_event/<slug:event_slug>', views.remove_event, name='remove_event'),
+    path('soceity/', views.soceity, name='soceity')
 ]

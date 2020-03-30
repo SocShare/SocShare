@@ -17,6 +17,19 @@ def events(request):
         context['search']=search
     return render(request,'socshare/events.html',context=context)
 
+
+def event_page(request, event_slug):
+    event = Event.objects.filter(slug = event_slug) 
+    # Not sure how to get comments, but they should be done here
+    context = {"title":"Events","events": event}
+    return render(request,'socshare/eventPage.html',context=context)
+
+def soceity(request):
+    search = request.GET.get('search')
+    societies = Society.objects.filter(name__icontains=search) if search else Event.objects.order_by('name')
+    context = {"title":Society, "society" : [s for s in societies]}
+    return render(request, 'socshare/society.html', context)
+
 def calendar(request):
     return render(request,'socshare/calendar.html',context={"title":"Calendar"})
 
@@ -131,8 +144,6 @@ def user_profile(request):
         return render(request,'socshare/profile.html',context=context)
     return redirect(reverse('socshare:login'))
 
-def event_page(request,event_slug):
-    return render(request,'socshare/event.html')
 
 def test(request):
     registered = False
