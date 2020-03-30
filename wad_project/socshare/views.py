@@ -9,6 +9,7 @@ from socshare.utils.src import check_email
 from django.template.defaultfilters import slugify
 from django.db.models.functions.datetime import datetime
 from django.utils import timezone
+
 def events(request):
     search = request.GET.get('search')
     events = Event.objects.filter(name__icontains=search) if search else Event.objects.order_by('date')
@@ -23,6 +24,12 @@ def event_page(request, event_slug):
     # Not sure how to get comments, but they should be done here
     context = {"title":"Events","events": event}
     return render(request,'socshare/eventPage.html',context=context)
+
+def edit_event(request, event_slug):
+    event = Event.objects.filter(slug = event_slug) 
+    context = {"title":"Events","events": event}
+    return render(request, 'socshare/edit_event.html', context)
+
 
 def soceity(request):
     search = request.GET.get('search')

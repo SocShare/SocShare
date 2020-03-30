@@ -41,7 +41,7 @@ Societies
                     <h5 class="card-title">{{ s.name }}</h5>
                     <p class="card-text">{{ s.website }}</p>
                     <!-- Add Society Profile Page -->
-                    <!-- <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Read More</a> -->
+                    <a href="{% url 'socshare:user_profile' %}{{ s.slug }}" class="btn btn-primary color-main">Profile Page</a>
                 </div>
             </div>
         </div>   

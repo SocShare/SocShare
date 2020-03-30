@@ -38,7 +38,7 @@ class Event(models.Model):
     society = models.ForeignKey(Society, on_delete=models.CASCADE)
     banner = models.ImageField(upload_to='event_banner', default='event_banner/default.png')
     slug = models.SlugField()
-
+    
     def delete(self, *args, **kwargs):
         if self.banner:
             if not 'default' in self.banner.url:
