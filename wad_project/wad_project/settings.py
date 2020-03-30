@@ -37,7 +37,7 @@ DEBUG = not PROD
 
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["socshare.pythonanywhere.com"]
 
 
 # Application definition
