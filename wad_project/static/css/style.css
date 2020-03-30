@@ -114,3 +114,7 @@
 .form-control.small {
     width: initial !important;
 }
+
+.gone {
+    display: none;
+}
