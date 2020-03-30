@@ -35,7 +35,7 @@ PROD = False
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = not PROD
 
-ALLOWED_HOSTS = ["socshare.pythonanywhere.com"] + ["localhost"] if not PROD else []
+ALLOWED_HOSTS = ["socshare.pythonanywhere.com"] + ["localhost" if not PROD else ""]
 
 
 # Application definition
