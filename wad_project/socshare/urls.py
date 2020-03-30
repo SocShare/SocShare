@@ -19,5 +19,5 @@ urlpatterns = [
     path('dashboard/add_event', views.add_event, name='add_event'),
     path('dashboard/<slug:event_slug>', views.edit_event, name = 'edit_event'),
     path('dashboard/remove_event/<slug:event_slug>', views.remove_event, name='remove_event'),
-    path('society/', views.society, name='society')
+    path('profiles/', views.profiles, name='profiles')
 ]

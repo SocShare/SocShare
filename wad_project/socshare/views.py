@@ -31,7 +31,7 @@ def edit_event(request, event_slug):
     return render(request, 'socshare/edit_event.html', context)
 
 
-def society(request):
+def profiles(request):
     search = request.GET.get('search')
     societies = Society.objects.filter(name__icontains=search) if search else Society.objects.order_by('name')
     context = {"title": "Societies", "searchbar":True, "society" : [s for s in societies]}
