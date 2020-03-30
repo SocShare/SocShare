@@ -6,9 +6,32 @@
 Societies
 {% endblock %}
 
-{% block container %}
-{% if society %}
 
+{% block container %}
+
+<h1> Societies </h1>
+
+<div class="row justify-content-end">
+    <div class="col-sm-3">
+        <div class="form-group">
+            <input type="text" class="form-control" id="searchBar" placeholder="Search Societies">
+        </div>
+    </div>
+</div>
+<br>
+<script>
+    $("#searchBar").on('keyup', function (e) {
+        if (e.keyCode === 13) {
+            window.location.href='?search='+$("#searchBar").val();
+        }
+    });
+</script>
+{% if search %}
+<h1>Events matching '{{search}}'</h1>
+<br /><br />
+{% endif %}
+{% if society %}
+<br>
     <div class="row row-cols-md-1 row-cols-lg-2 row-cols-xl-3 flex-grow">
         {% for s in society%}
         <div class="col mb-4">

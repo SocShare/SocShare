@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 from socshare.utils.src import check_email
 from django.template.defaultfilters import slugify
 from django.db.models.functions.datetime import datetime
-
+from django.utils import timezone
 def events(request):
     search = request.GET.get('search')
     events = Event.objects.filter(name__icontains=search) if search else Event.objects.order_by('date')
@@ -26,9 +26,11 @@ def event_page(request, event_slug):
 
 def soceity(request):
     search = request.GET.get('search')
-    societies = Society.objects.filter(name__icontains=search) if search else Event.objects.order_by('name')
+    societies = Society.objects.filter(name__icontains=search) if search else Society.objects.order_by('name')
     context = {"title":Society, "society" : [s for s in societies]}
     return render(request, 'socshare/society.html', context)
+
+# def society_page(request, event_slug)
 
 def calendar(request):
     return render(request,'socshare/calendar.html',context={"title":"Calendar"})
