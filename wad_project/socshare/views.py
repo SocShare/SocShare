@@ -8,6 +8,7 @@ from django.shortcuts import redirect
 from socshare.utils.src import check_email
 from django.template.defaultfilters import slugify
 from django.db.models.functions.datetime import datetime
+from django.conf import settings
 
 def events(request):
     search = request.GET.get('search')
@@ -46,7 +47,7 @@ def register(request):
         name = request.POST.get('name')
         acronym = request.POST.get('acronym')
         if password == verify:
-            if check_email(email):
+            if settings.PROD or check_email(email):
                 if User.objects.filter(email=email).count()!=0:
                     return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'An account is already registered with this email address!'})
                 if Society.objects.filter(acronym=acronym).count()!=0:
