@@ -47,7 +47,7 @@ def register(request):
         name = request.POST.get('name')
         acronym = request.POST.get('acronym')
         if password == verify:
-            if settings.PROD:
+            if settings.PROD or check_email(email):
                 if User.objects.filter(email=email).count()!=0:
                     return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'An account is already registered with this email address!'})
                 if Society.objects.filter(acronym=acronym).count()!=0:
@@ -63,23 +63,7 @@ def register(request):
                 login(request, user)
                 return redirect(reverse('socshare:events'))
             else:
-                if check_email(email):
-                    if User.objects.filter(email=email).count()!=0:
-                        return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'An account is already registered with this email address!'})
-                    if Society.objects.filter(acronym=acronym).count()!=0:
-                        return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'Another society already has this acronym!'})
-                    username = slugify(name)
-                    user = User.objects.get_or_create(username=username)[0]
-                    user.email = email
-                    user.set_password(password)
-                    user.save()
-                    society = Society.objects.get_or_create(name=name, user=user)[0]
-                    society.acronym = acronym
-                    society.save()
-                    login(request, user)
-                    return redirect(reverse('socshare:events'))
-                else:
-                    return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'Account not registered with SRC!'})
+                return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'Account not registered with SRC!'})
         else:
             return render(request,'socshare/register.html',context={'alert':'danger','alert_msg':'Passwords do not match!'})
     return render(request,'socshare/register.html')
