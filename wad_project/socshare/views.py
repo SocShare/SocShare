@@ -23,7 +23,7 @@ def event_page(request, event_slug):
     event = Event.objects.filter(slug = event_slug) 
     # Not sure how to get comments, but they should be done here
     context = {"title":"Events","events": event}
-    return render(request,'socshare/eventPage.html',context=context)
+    return render(request,'socshare/event.html',context=context)
 
 def edit_event(request, event_slug):
     event = Event.objects.filter(slug = event_slug) 
@@ -36,8 +36,6 @@ def soceity(request):
     societies = Society.objects.filter(name__icontains=search) if search else Society.objects.order_by('name')
     context = {"title":Society, "society" : [s for s in societies]}
     return render(request, 'socshare/society.html', context)
-
-# def society_page(request, event_slug)
 
 def calendar(request):
     return render(request,'socshare/calendar.html',context={"title":"Calendar"})

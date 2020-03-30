@@ -40,13 +40,6 @@
                     <li><a href="{% url 'socshare:register' %}">Register</a></li>
                     {% endif %}
                 </ul>
-                <ul class="list-unstyled nav-links"></ul>
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'socshare:logout' %}">Logout</a></li>
-                    {% else %}
-                    {% endif %}
-                </ul>
-
             </nav>
         
             <div class="content {% if fullscreen %}fullscreen{% endif %}">
