@@ -2,3 +2,31 @@
 {% load static %}
 {% load template_tags %}
 
+{% block container %}
+
+{% if search %}
+<h1>Events matching '{{search}}'</h1>
+<br /><br />
+{% endif %}
+{% if society %}
+<br>
+    <div class="row row-cols-md-1 row-cols-lg-2 row-cols-xl-3 flex-grow">
+        {% for s in society%}
+        <div class="col mb-4">
+            <div class="card">
+                <img src="{{ MEDIA_URL }}{{ s.banner }}" class="card-img-top" alt="Card image">
+                <div class="card-body">
+                    <h5 class="card-title">{{ s.name }}</h5>
+                    <p class="card-text">{{ s.website }}</p>
+                    <!-- Add Society Profile Page -->
+                    <a href="{% url 'socshare:user_profile' %}{{ s.slug }}" class="btn btn-primary color-main">Profile Page</a>
+                </div>
+            </div>
+        </div>   
+        {% endfor %} 
+    </div>
+   
+{% else %}
+    <strong>There are no societies to show.</strong>
+{% endif %}
+{% endblock %}

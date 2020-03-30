@@ -7,14 +7,17 @@ Dashboard
 
 <!-- Problems with this page
         1. This page isnt passing the profile for the SOC in views.py like the profile page does. 
-            if that can get working it should be easier to just modify the page :) -->
+            if that can get working it should be easier to just modify the page :) 
+        2. Edit Page
+-->
 
 {% block container %}
 <table class="table table-borderless">
     <!-- Manage Events Row -->
     <h1><center>Society Dashboard</center></h1>
+    <br>
     <tr>
-        <h2>Manage Event</h2>
+        <h2>Manage Events</h2>
         <br>
         <div class="row row-cols-md-1 row-cols-lg-2 row-cols-xl-3 flex-grow">
             {% if events %}
@@ -26,7 +29,7 @@ Dashboard
                         <h5 class="card-title">{{ e.name }}</h5>
                         <p class="card-text">{{ e.description_short }}</p>
                         <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Read More</a>
-                        <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Edit</a>
+                        <a href="{% url 'socshare:dashboard' %}{{ e.slug }}" class="btn btn-primary color-main">Edit</a>
                         <a href="{% url 'socshare:dashboard' %}remove_event/{{ e.slug }}" class="btn btn-primary color-main">Remove</a>
                     </div>
                 </div>
@@ -48,6 +51,7 @@ Dashboard
             <div class="col-sm-4">
                 <br>
                 <h4>Live View</h4>
+                <br>
             </div>
         </div>
         <br>
@@ -147,22 +151,23 @@ Dashboard
                         <input name="changeName" type="text" class="form-control" id="changeName" placeholder="{{ name }}">
                     </div>
                     <div class="form-group">
-                        <label for="changePassword" >Change Soceity Password</label>
-                        <input name="changePassword" type="password" class="form-control" id="changePassword" placeholder="New Password">
-                    </div>
-                    <div class="form-group">
-                        <label for="changePassword2" >Verify Soceity Password</label>
-                        <input name="changePassword2" type="password" class="form-control" id="changePassword2" placeholder="Verify Password">
-                    </div>
-                </div>
-                <div class = "col-sm-3">
-                    <div class="form-group">
                         <label for="changeAcronym" >Change Soceity Acronym </label>
                         <input name="changeAcronym" type="text" class="form-control" id="changeAcronym" placeholder="{{ acronym }}">
                     </div>
                     <div class="form-group">
                         <label for="changeEmail" >Change Soceity Email </label>
                         <input name="changeEmail" type="email" class="form-control" id="changeEmail" placeholder="{{ email }}">
+                    </div>
+                    
+                </div>
+                <div class = "col-sm-3">
+                    <div class="form-group">
+                        <label for="changePassword" >Change Soceity Password</label>
+                        <input name="changePassword" type="password" class="form-control" id="changePassword" placeholder="New Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="changePassword2" >Verify Soceity Password</label>
+                        <input name="changePassword2" type="password" class="form-control" id="changePassword2" placeholder="Verify Password">
                     </div>
                     <br>
                     <div>
