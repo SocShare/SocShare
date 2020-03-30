@@ -109,3 +109,8 @@
 }
 
 /* End society profile */
+
+
+.form-control.small {
+    width: initial !important;
+}

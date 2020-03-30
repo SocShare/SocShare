@@ -46,7 +46,10 @@
                 {% if not fullscreen %}
                 <div class="header">
                     <button onclick="togglesideBar()">AAA</button>
-                    <b class="ml-2">{{ title }}</b>
+                    <b class="ml-2 mr-2">{{ title }}</b>
+                    {% if searchbar %}
+                    <input type="text" class="form-control small" id="searchbar" placeholder="Search {{ title }}">
+                    {% endif %}
                     <div class="flex-grow"></div>
                     <b id="profilename"></b>
                 </div>

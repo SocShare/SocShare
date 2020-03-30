@@ -2,20 +2,6 @@
 {% load static %}
 
 {% block container %}
-<div class="row justify-content-end">
-    <div class="col-sm-3">
-        <div class="form-group">
-            <input type="text" class="form-control" id="searchBar" placeholder="Search Events">
-        </div>
-    </div>
-</div>
-<script>
-    $("#searchBar").on('keyup', function (e) {
-        if (e.keyCode === 13) {
-            window.location.href='?search='+$("#searchBar").val();
-        }
-    });
-</script>
 {% if search %}
 <h1>Events matching '{{search}}'</h1>
 <br /><br />

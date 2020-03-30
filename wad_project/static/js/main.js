@@ -22,3 +22,13 @@ function userchange(googleUser) {
 
     document.getElementById("profilename").innerText = profile.getName();
 }
+
+
+
+$( document ).ready(function() {
+    $("#searchbar").on('keyup', function (e) {
+        if (e.keyCode === 13) {
+            window.location.href='?search='+$("#searchbar").val();
+        }
+    });
+});
