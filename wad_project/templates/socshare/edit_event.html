@@ -1,0 +1,109 @@
+{% extends 'socshare/base.html' %}
+{% load static %}
+
+{% block title %}
+Edit Events
+{% endblock %}
+{% block container %}
+<br>
+<table>
+    {% for e in events %}
+    <tr>
+        <br>
+        <br>
+        <div class="row justify-content-around">
+            <div class="col-sm-7">
+                <h2>Edit {{ e.name }} Event</h2>
+            </div>
+            <div class="col-sm-4">
+                <br>
+                <h4>Live View</h4>
+                <br>
+            </div>
+        </div>
+        <br>
+        <!-- 3 coloums -->
+
+        <div class="row justify-content-around">
+            <div class="col-sm-6">
+                <!-- First coloum Form  -->
+                <form action="{% url 'socshare:add_event' %}" method='POST' enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <!-- First Row -->
+                    <div class="form-group">
+                    <input name="name" type="text" class="form-control" id="nameInput" placeholder = "Event Name" value="{{ e.name }}">
+                    </div>
+                    <!-- Second Row -->
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="form-group">  
+                                <input name="date" type="date" class="form-control" id="dateInput" placeholder="Date"">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input name="time" type="time" class="form-control" id="timeInput" placeholder="Time">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input name="location" type="text" class="form-control" id="locationInput" placeholder="Location"   value = "{{ e.location }}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Third Row -->
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input name="url" type="url" class="form-control" id="urlInput" placeholder="Tickets URL" value = "{{ e.ticket_url }}">
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="input-group">
+                                <div class="custom-file">
+                                <input name="banner" type="file" class="custom-file-input" id="inputGroupFile01"
+                                    aria-describedby="inputGroupFileAddon01">
+                                <label class="custom-file-label" for="inputGroupFile01">Banner Image</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Fourth Row - Description -->
+                    <div class="form-group">
+                        <textarea name="description" class="form-control" id="descriptionInput" rows="8" placeholder="New Event Description"></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">Edit Event</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Live view card - Ryan take a look at this too -->
+            <div class="col-sm-1"></div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <img src="{{ MEDIA_URL }}/event_banner/default.png" class="card-img-top" alt="Card image">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm">
+                                <h5 id="live-name" class="card-title">{{ e.name }}</h5>
+                            </div>
+                        </div>
+                        <p id="live-desc" class="card-text">{{ e.description_short }}</p>
+                        <!-- This button does litreally nothing for live view -->
+                        <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $('#nameInput').change(function() {
+                    $('#live-name').text($('#nameInput').val());
+                });
+                $('#descriptionInput').change(function() {
+                    $('#live-desc').text($('#descriptionInput').val().substring(0,200)+'...');
+                });
+            </script>
+        </div>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
