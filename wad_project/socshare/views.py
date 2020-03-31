@@ -20,13 +20,16 @@ def events(request):
 
 
 def event_page(request, event_slug):
-    event = Event.objects.filter(slug = event_slug) 
-    # Not sure how to get comments, but they should be done here
-    context = {"title":"Events","fullscreen":True,"event": event[0]}
+    event = Event.objects.filter(slug = event_slug).get()
+    # Neat trick for getting comments associated with the event
+    comments = event.comment_set.all()
+    if request.method=='POST':
+        print(request.POST)
+    context = {"title":"Events","fullscreen":True,"event": event,"comments":comments}
     return render(request,'socshare/event.html',context=context)
 
 def edit_event(request, event_slug):
-    event = Event.objects.filter(slug = event_slug) 
+    event = Event.objects.filter(slug = event_slug)
     context = {"title":"Events","events": event}
     return render(request, 'socshare/edit_event.html', context)
 

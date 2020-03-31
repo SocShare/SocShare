@@ -30,6 +30,7 @@
                         <p style="align-content:justify;"> {{ event.description }} </p>
                     </div>
                 </div>
+            </center>
         </tr>
         <hr style="height:30pt; visibility:hidden;">
         {% if event.ticket_url %}
@@ -41,8 +42,19 @@
             </div>
         </tr>
         {% endif %}
-
         <br>
     </table>
+    <form method="POST">
+        {% csrf_token %}
+        <input  name="comment" type="text" class="form-control" id="commentInput" placeholder="Leave a comment...">
+        <input type="hidden" id="authTokenComment" name="token" value="">
+    </form>
+    <button type="submit" id="commentSubmit" class="btn btn-primary btn-lg btn-block">Post</button>
+    {% for comment in comments %}
+    <br>
+    {{ comment.name }}, {{ comment.date }}<br>
+    {{ comment.content }}
+    <br>
+    {% endfor %}
 </div>
 {% endblock %}
