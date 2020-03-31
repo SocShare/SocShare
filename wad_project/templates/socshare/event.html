@@ -2,11 +2,12 @@
 {% load static %}
 
 {% block container %}
-<img src="{{ MEDIA_URL }}{{ event.banner }}" class="banner-img" alt="Event image">
 <div class="content">
-    <table class="table table-borderless">
+        <!-- Alex fix this if ya get time :) -->
+        <img src="{{ MEDIA_URL }}{{ event.banner }}" class="banner-img" alt="Event image">
+
         <hr style="height:30pt; visibility:hidden;">
-        <tr>
+
             <!-- Name and Time -->
             <center>
                 <div class="row justify-content-between">
@@ -27,39 +28,69 @@
                 <!-- Description -->
                 <div class="row justify-content-center">
                     <div class="col-sm-8">
-                        <p style="align-content:justify;"> {{ event.description }} </p>
+                        <p align="justify"> {{ event.description|center:"0" }}</p>
                     </div>
                 </div>
             </center>
-        </tr>
+        <!-- </tr> -->
         <hr style="height:30pt; visibility:hidden;">
         {% if event.ticket_url %}
-        <tr>
+
             <div class="row align-self-center">
                 <div class="col">
                     <a href="{{ event.ticket_url }}" type="button" class="btn btn-primary">Buy Tickets Here</a>
                 </div>
             </div>
-        </tr>
+
         {% endif %}
         <br>
-    </table>
-    {% if alert %}
-    <div class="alert alert-{{ alert }}" role="alert">
-        {{ alert_msg }}
-    </div>
-    {% endif %}
-    <form method="POST">
-        {% csrf_token %}
-        <input  name="comment" type="text" class="form-control" id="commentInput" placeholder="Leave a comment...">
-        <input type="hidden" id="authTokenComment" name="token" value="">
-        <button type="submit" id="commentSubmit" class="btn btn-primary btn-lg btn-block">Post</button>
-    </form>
-    {% for comment in comments %}
-    <br>
-    {{ comment.name }}, {{ comment.date }}<br>
-    {{ comment.content }}
-    <br>
-    {% endfor %}
+
+           
+            <!-- Comments should be posted here. not sure how to set a max height for it :) -->
+            <div class="overflow" style ="height:auto;" >
+
+                <div class="row justify-content-center">
+                    <div class="col-sm-9"><h3> Comments </h3></div>
+
+                    <br>
+                    <div class="col-sm-8">
+                        <br>
+                        {% if alert %}
+                            <div class="alert alert-{{ alert }}" role="alert">
+                                {{ alert_msg }}
+                            </div>
+                        {% endif %}
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="card" >
+                                    <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"> <input  name="comment" type="text" class="form-control" id="commentInput" placeholder="Leave a comment..."></li>
+                                    </ul>
+                                </div>
+                                
+                                <input type="hidden" id="authTokenComment" name="token" value="">
+                                <button type="submit" id="commentSubmit" class="btn btn-primary btn-lg btn-block">Post</button>
+                            </form>
+                        <br>
+                        
+                        {% for comment in comments %}
+                        <br>
+                        
+                            <div class="card" >
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-auto mr-auto"> {{ comment.name }}</div>
+                                        <div class="col-auto">{{ comment.date }}</div>
+                                    </div>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                <li class="list-group-item"> {{ comment.content }}</li>
+                                </ul>
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
 </div>
 {% endblock %}
