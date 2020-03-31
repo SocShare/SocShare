@@ -2,10 +2,6 @@
 {% extends 'socshare/base.html' %}
 {% load static %}
 
-{% block title %}
-Event
-{% endblock %}
-
 {% block container %}
 
 <br>
@@ -57,9 +53,6 @@ Event
             <a href="{{ e.ticket_url }}" type="button" class="btn btn-primary">Buy Tickets Here</a>
             </div>  
         </div>
-
-    {% else %}
-        <!-- Just keep this empty :) -->
     {% endif %}
     </tr>
 
