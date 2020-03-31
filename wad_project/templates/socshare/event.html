@@ -48,8 +48,8 @@
         {% csrf_token %}
         <input  name="comment" type="text" class="form-control" id="commentInput" placeholder="Leave a comment...">
         <input type="hidden" id="authTokenComment" name="token" value="">
+        <button type="submit" id="commentSubmit" class="btn btn-primary btn-lg btn-block">Post</button>
     </form>
-    <button type="submit" id="commentSubmit" class="btn btn-primary btn-lg btn-block">Post</button>
     {% for comment in comments %}
     <br>
     {{ comment.name }}, {{ comment.date }}<br>
