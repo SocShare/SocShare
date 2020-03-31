@@ -23,7 +23,7 @@ def event_page(request, event_slug):
     event = Event.objects.filter(slug = event_slug) 
     # Not sure how to get comments, but they should be done here
     context = {"title":"Events","events": event}
-    return render(request,'socshare/event.html',context=context)
+    return render(request,'socshare/eventPage.html',context=context)
 
 def edit_event(request, event_slug):
     event = Event.objects.filter(slug = event_slug) 

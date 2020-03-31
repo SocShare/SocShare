@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% extends 'socshare/base.html' %}
+{% load static %}
+
+{% block container %}
+
+<br>
+<table class="table table-borderless">
+    <!-- This needs to be changed so it can merge up with whatever the event thats been clicked on :) -->
+    {% for e in events  %}
+    <tr>
+        <!-- Banner image -->
+        <div class="row justify-content-center">
+            <div class="col-sm-11">
+                <img src="{{ MEDIA_URL }}{{ e.banner }}" class="card-img-top" alt="Card image">
+            </div>
+        </div>
+    </tr>
+    <hr style="height:30pt; visibility:hidden;">
+    <tr>
+        <!-- Name and Time -->
+        <center>
+            
+            <div class="row justify-content-between">
+                <div class="col-sm-5">
+                    <h1>{{ e.name }}</h1>
+                </div>
+                <div class="col-sm-5">
+                    <h2>{{ e.date }}  {{ e.time }}</h2> 
+                </div>
+            </div>
+            <br>
+        <div class="row">
+            <div class="col align-self-end">
+                <font size="5">{{ e.society }}</font>
+            </div>
+        </div>
+        <hr style="height:20pt; visibility:hidden;">
+        <!-- Description -->
+        <div class="row justify-content-center">
+            <div class="col-sm-8">
+                <p style="align-content:justify;"> {{ e.description }} </p>
+            </div>
+        </div>
+        
+    </tr>
+    <hr style="height:30pt; visibility:hidden;">
+    {% if e.ticket_url %}
+    <tr>
+
+        <div class="row align-self-center">
+            <div class="col">
+            <a href="{{ e.ticket_url }}" type="button" class="btn btn-primary">Buy Tickets Here</a>
+            </div>  
+        </div>
+    {% endif %}
+    </tr>
+
+    <br>
+    {% endfor %}
+</table>
+{% endblock %}
+
+
