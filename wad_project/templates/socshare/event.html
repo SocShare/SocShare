@@ -44,6 +44,11 @@
         {% endif %}
         <br>
     </table>
+    {% if alert %}
+    <div class="alert alert-{{ alert }}" role="alert">
+        {{ alert_msg }}
+    </div>
+    {% endif %}
     <form method="POST">
         {% csrf_token %}
         <input  name="comment" type="text" class="form-control" id="commentInput" placeholder="Leave a comment...">

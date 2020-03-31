@@ -4,8 +4,6 @@ from django.template.defaultfilters import slugify
 from django.utils import timezone
 from socshare.utils.models import random_name
 
-# TODO: Create Google Auth model
-
 class Society(models.Model):
     name = models.CharField(max_length=128)
     acronym = models.CharField(max_length=15)
@@ -57,7 +55,7 @@ class Comment(models.Model):
     content = models.TextField()
     name = models.CharField(max_length=50)
     date = models.DateTimeField(default=timezone.now)
-    token = models.TextField()
+    auth = models.TextField()
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):

@@ -9,6 +9,7 @@ from socshare.utils.src import check_email
 from django.template.defaultfilters import slugify
 from django.db.models.functions.datetime import datetime
 from django.conf import settings
+import socshare.utils.google_auth as gauth
 
 def events(request):
     search = request.GET.get('search')
@@ -23,9 +24,24 @@ def event_page(request, event_slug):
     event = Event.objects.filter(slug = event_slug).get()
     # Neat trick for getting comments associated with the event
     comments = event.comment_set.all()
-    if request.method=='POST':
-        print(request.POST)
     context = {"title":"Events","fullscreen":True,"event": event,"comments":comments}
+    if request.method=='POST':
+        token = request.POST.get('token')
+        comment = request.POST.get('comment')
+        id = gauth.authenticate(token)
+        # check user is logged in
+        if id==None:
+            context['alert']='danger'
+            context['alert_msg']='Please login with your Google account to make a comment.'
+        else:
+            # check if user has already commented
+            if event.comment_set.filter(auth=id).count()>=1:
+                context['alert']='warning'
+                context['alert_msg']='You have already made a comment.'
+            else:
+                comment = Comment.objects.get_or_create(content=comment, event=event)[0]
+                comment.auth=id
+                comment.save()
     return render(request,'socshare/event.html',context=context)
 
 def edit_event(request, event_slug):
