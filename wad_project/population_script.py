@@ -120,7 +120,8 @@ def add_event(name,description,date,society,banner=None,location=None):
     return event
 
 def add_comment(content, event):
-    comment = Comment.objects.get_or_create(content=content, author=test_user, event=event)[0]
+    comment = Comment.objects.get_or_create(content=content, event=event)[0]
+    comment.token='test_token'
     comment.save()
     return comment
 

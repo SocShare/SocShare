@@ -20,10 +20,18 @@ function userchange(googleUser) {
     auth_token = googleUser.getAuthResponse().id_token; //THIS IS BACKEND VERIFICATION TOKEN
     console.log('backend: ' + auth_token);
 
+    /* 
+        TODO: Create a better method to set auth_token on event page
+    */
+
+    if ($('#authTokenComment').length) {
+        $('#authTokenComment').val(auth_token);
+    }
+
     document.getElementById("profilename").innerText = profile.getName();
 }
 
-
+// on document load
 
 $( document ).ready(function() {
     $("#searchbar").on('keyup', function (e) {
@@ -32,7 +40,6 @@ $( document ).ready(function() {
         }
     });
 });
-
 
 ////maps stuff
 
