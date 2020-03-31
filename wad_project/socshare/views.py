@@ -22,7 +22,7 @@ def events(request):
 def event_page(request, event_slug):
     event = Event.objects.filter(slug = event_slug) 
     # Not sure how to get comments, but they should be done here
-    context = {"title":"Events","events": event}
+    context = {"title":"Events","fullscreen":True,"event": event[0]}
     return render(request,'socshare/eventPage.html',context=context)
 
 def edit_event(request, event_slug):
@@ -92,7 +92,7 @@ def register(request):
 def dashboard(request):
     if request.user.is_authenticated:
         events = Event.objects.filter(society=request.user.society)
-        return render(request,'socshare/dashboard.html',context={'events':events})
+        return render(request,'socshare/dashboard.html',context={"title":"Dashboard","events":events})
     return redirect(reverse('socshare:events'))
 
 def add_event(request):
