@@ -85,11 +85,13 @@ def register(request):
         password = request.POST.get('password')
         verify = request.POST.get('verify')
         name = request.POST.get('name')
-        acronym = request.POST.get('acronym')
+        acronym = request.POST.get('acronym').lower()
         if password == verify:
             if settings.PROD or check_email(email):
                 if User.objects.filter(email=email).count()!=0:
                     return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'An account is already registered with this email address!'})
+                if Society.objects.filter(name=name).count()!=0:
+                    return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'Another society already has this name!'})
                 if Society.objects.filter(acronym=acronym).count()!=0:
                     return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'Another society already has this acronym!'})
                 username = slugify(name)
