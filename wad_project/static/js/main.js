@@ -32,3 +32,28 @@ $( document ).ready(function() {
         }
     });
 });
+
+
+////maps stuff
+
+var map;
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+      center: {lat: 55.872490, lng: -4.289494},
+      zoom: 17,
+      streetViewControl: false,
+      disableDefaultUI: true,
+      styles: [
+                {
+                    featureType: "poi.business",
+                    stylers: [{visibility: "off"}]
+                },
+                {
+                    featureType: "poi.park",
+                    elementType: "labels.text",
+                    stylers: [{visibility: "off"}]
+                }
+            ],
+    });
+    continueMap();
+}

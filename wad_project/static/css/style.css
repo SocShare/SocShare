@@ -44,7 +44,7 @@
     padding: 0 30px 30px 30px;
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .fullscreen {
@@ -117,4 +117,8 @@
 
 .gone {
     display: none;
+}
+
+.row.map {
+    height: 350px;
 }
