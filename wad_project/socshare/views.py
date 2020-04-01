@@ -158,8 +158,8 @@ def update_account(request):
         password=request.POST.get('password')
         password_verify=request.POST.get('passwordVerify')
         if email:
-            # SRC checks
-            request.user.email=email
+            if settings.PROD or check_email(email):
+                request.user.email=email
         if old and password and password_verify:
             user = authenticate(username=request.user.username, password=old)
             if user:
