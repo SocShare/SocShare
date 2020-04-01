@@ -23,8 +23,8 @@
                         <h5 class="card-title">{{ e.name }}</h5>
                         <p class="card-text">{{ e.description_short }}</p>
                         <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Read More</a>
-                        <a href="{% url 'socshare:edit_event' %}{{ e.slug }}" class="btn btn-primary color-main">Edit</a>
-                        <a href="{% url 'socshare:remove_event' %}{{ e.slug }}" class="btn btn-primary color-main">Remove</a>
+                        <a href="{% url 'socshare:edit_event' e.slug %}" class="btn btn-primary color-main">Edit</a>
+                        <a href="{% url 'socshare:remove_event' e.slug %}" class="btn btn-primary color-main">Remove</a>
                     </div>
                 </div>
             </div>
