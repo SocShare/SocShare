@@ -65,10 +65,7 @@ def edit_event(request, event_slug):
             event.location=location
         banner=request.FILES.get('banner')
         if banner:
-            if event.banner:
-                if not 'default' in event.banner.url:
-                    event.banner.delete()
-            event.banner=banner
+            event.update_banner(banner)
         event.save()
         return redirect(reverse('socshare:dashboard'))
     context = {"title":"Events","event": event}
@@ -137,8 +134,27 @@ def register(request):
 def dashboard(request):
     if request.user.is_authenticated:
         events = Event.objects.filter(society=request.user.society)
-        return render(request,'socshare/dashboard.html',context={"title":"Dashboard","events":events})
+        return render(request,'socshare/dashboard.html',context={"title":"Dashboard","events":events,'email':request.user.email})
     return redirect(reverse('socshare:events'))
+
+def update_profile(request):
+    if request.method=='POST':
+        society=request.user.society
+        banner=request.FILES.get('banner')
+        profile=request.FILES.get('profile')
+        description=request.POST.get('description')
+        print(request.FILES)
+        if banner:
+            society.update_banner(banner)
+        if profile:
+            society.update_profile(profile)
+        if description:
+            society.description=description
+        society.save()
+    return redirect(reverse('socshare:dashboard'))
+
+def update_account(request):
+    return redirect(reverse('socshare:dashboard'))
 
 def add_event(request):
     if request.user.is_authenticated:

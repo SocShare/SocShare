@@ -23,8 +23,8 @@
                         <h5 class="card-title">{{ e.name }}</h5>
                         <p class="card-text">{{ e.description_short }}</p>
                         <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Read More</a>
-                        <a href="{% url 'socshare:dashboard' %}{{ e.slug }}" class="btn btn-primary color-main">Edit</a>
-                        <a href="{% url 'socshare:dashboard' %}remove_event/{{ e.slug }}" class="btn btn-primary color-main">Remove</a>
+                        <a href="{% url 'socshare:edit_event' %}{{ e.slug }}" class="btn btn-primary color-main">Edit</a>
+                        <a href="{% url 'socshare:remove_event' %}{{ e.slug }}" class="btn btn-primary color-main">Remove</a>
                     </div>
                 </div>
             </div>
@@ -165,36 +165,35 @@
             </div>
         </div>
         <div class="row">
-            <form method="POST">
+            <form action="{% url 'socshare:update_profile' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="col-sm-4">
-                    <br />
                     <!-- This should edit Profile Picture -->
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input name="profile" type="file" class="custom-file-input" id="inputGroupFile02"
-                            aria-describedby="inputGroupFileAddon02">
-                            <label class="custom-file-label" for="inputGroupFile02">Profile Picture</label>
-                        </div>
-                    </div>
-                    <br />
-                    <!-- This should edit Banner -->
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input name="banner" type="file" class="custom-file-input" id="inputGroupFile03"
-                            aria-describedby="inputGroupFileAddon03">
-                            <label class="custom-file-label" for="inputGroupFile03">Profile Banner</label>
-                        </div>
-                    </div>
-                    <br />
                     <div class="form-group">
-                        <textarea name="description" class="form-control" id="descriptionInput" rows="8" placeholder="Event Description" required="true"></textarea>
+                        <div class="custom-file">
+                          <input name="profile" type="file" class="custom-file-input" id="profileUploadImage"
+                            aria-describedby="profileUploadImage">
+                          <label class="custom-file-label" for="profileUploadImage">Profile Image</label>
+                        </div>
                     </div>
-                    <button type="button" class="btn btn-primary">Update Profile</button>
+                    <!-- This should edit Banner -->
+                    <div class="form-group">
+                        <div class="custom-file">
+                          <input name="banner" type="file" class="custom-file-input" id="bannerUploadImage"
+                            aria-describedby="bannerUploadImage">
+                          <label class="custom-file-label" for="bannerUploadImage">Banner Image</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="description" class="form-control" id="descriptionInput" rows="8" placeholder="Society Description"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
                 </div>
             </form>
             <div class="col-sm-3"></div>
             <div class="col-sm-4">
-                <form method="POST">
+                <form action="{% url 'socshare:update_account' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <div class="form-group">
                         <label for="changeEmail">Update Society Email</label>
                         <input name="changeEmail" type="email" class="form-control" id="changeEmail" placeholder="{{ email }}">
@@ -207,7 +206,7 @@
                         <label for="changePassword2">Verify Society Password</label>
                         <input name="changePassword2" type="password" class="form-control" id="changePassword2" placeholder="Verify Password">
                     </div>
-                    <button type="button" class="btn btn-primary">Confirm Changes</button>
+                    <button type="submit" class="btn btn-primary">Confirm Changes</button>
                 </form>
             </div>
         </div>
