@@ -1,12 +1,6 @@
 {% extends 'socshare/base.html' %}
 {% load static %}
 
-<!-- Problems with this page
-        1. This page isnt passing the profile for the SOC in views.py like the profile page does. 
-            if that can get working it should be easier to just modify the page :) 
-        2. Edit Page
--->
-
 {% block container %}
 <table class="table table-borderless">
     <!-- Manage Events Row -->
@@ -57,14 +51,11 @@
                     {{ alert_msg }}
                 </div>
                 {% endif %}
-                <!-- First coloum Form  -->
                 <form action="{% url 'socshare:add_event' %}" method='POST' enctype="multipart/form-data">
                     {% csrf_token %}
-                    <!-- First Row -->
                     <div class="form-group">
                       <input name="name" type="text" class="form-control" id="nameInput" placeholder="Event Name" required="true">
                     </div>
-                    <!-- Second Row -->
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">  
@@ -86,7 +77,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Third Row -->
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -94,7 +84,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Fourth Row - Description -->
                     <div class="form-group">
                         <textarea name="description" class="form-control" id="descriptionInput" rows="8" placeholder="Event Description" required="true"></textarea>
                     </div>
@@ -125,7 +114,6 @@
                     </div>
                 </form>
             </div>
-            <!-- Live view card - Ryan take a look at this too -->
             <div class="col-sm-1"></div>
             <div class="col-sm-4">
                 <div class="card">
@@ -137,7 +125,6 @@
                             </div>
                         </div>
                         <p id="live-desc" class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Text text blah ...</p>
-                        <!-- This button does litreally nothing for live view -->
                         <a href="#" class="btn btn-primary color-main">Read More</a>
                     </div>
                 </div>
