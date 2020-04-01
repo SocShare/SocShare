@@ -1,12 +1,6 @@
 {% extends 'socshare/base.html' %}
 {% load static %}
 
-<!-- Problems with this page
-        1. This page isnt passing the profile for the SOC in views.py like the profile page does. 
-            if that can get working it should be easier to just modify the page :) 
-        2. Edit Page
--->
-
 {% block container %}
 <table class="table table-borderless">
     <!-- Manage Events Row -->
@@ -23,8 +17,8 @@
                         <h5 class="card-title">{{ e.name }}</h5>
                         <p class="card-text">{{ e.description_short }}</p>
                         <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Read More</a>
-                        <a href="{% url 'socshare:dashboard' %}{{ e.slug }}" class="btn btn-primary color-main">Edit</a>
-                        <a href="{% url 'socshare:dashboard' %}remove_event/{{ e.slug }}" class="btn btn-primary color-main">Remove</a>
+                        <a href="{% url 'socshare:edit_event' e.slug %}" class="btn btn-primary color-main">Edit</a>
+                        <a href="{% url 'socshare:remove_event' e.slug %}" class="btn btn-primary color-main">Remove</a>
                     </div>
                 </div>
             </div>
@@ -52,23 +46,25 @@
         <!-- 3 coloums -->
         <div class="row">
             <div class="col-sm-6">
-                <!-- First coloum Form  -->
+                {% if alert %}
+                <div class="alert alert-{{ alert }}" role="alert">
+                    {{ alert_msg }}
+                </div>
+                {% endif %}
                 <form action="{% url 'socshare:add_event' %}" method='POST' enctype="multipart/form-data">
                     {% csrf_token %}
-                    <!-- First Row -->
                     <div class="form-group">
-                      <input name="name" type="text" class="form-control" id="nameInput" placeholder="Event Name">
+                      <input name="name" type="text" class="form-control" id="nameInput" placeholder="Event Name" required="true">
                     </div>
-                    <!-- Second Row -->
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">  
-                                <input name="date" type="date" class="form-control" id="dateInput" placeholder="Date">
+                                <input name="date" type="date" class="form-control" id="dateInput" placeholder="Date" required="true">
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <input name="time" type="time" class="form-control" id="timeInput" placeholder="Time">
+                                <input name="time" type="time" class="form-control" id="timeInput" placeholder="Time" required="true">
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -81,7 +77,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Third Row -->
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
@@ -89,9 +84,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Fourth Row - Description -->
                     <div class="form-group">
-                        <textarea name="description" class="form-control" id="descriptionInput" rows="8" placeholder="Event Description"></textarea>
+                        <textarea name="description" class="form-control" id="descriptionInput" rows="8" placeholder="Event Description" required="true"></textarea>
                     </div>
                     <!-- 5 Row - Map -->
                     <div class="row map m-2">
@@ -120,7 +114,6 @@
                     </div>
                 </form>
             </div>
-            <!-- Live view card - Ryan take a look at this too -->
             <div class="col-sm-1"></div>
             <div class="col-sm-4">
                 <div class="card">
@@ -132,7 +125,6 @@
                             </div>
                         </div>
                         <p id="live-desc" class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Text text blah ...</p>
-                        <!-- This button does litreally nothing for live view -->
                         <a href="#" class="btn btn-primary color-main">Read More</a>
                     </div>
                 </div>
@@ -148,71 +140,67 @@
         </div>
         <hr width="85%">
     </tr>
-    <!-- Soceity Settings -->
+    <!-- Society Settings -->
     <tr>
-        <br>
-        <h2> Society Settings </h2> 
-        <br>
-        <!-- This fourm needs to be mereged with the views.py, I couldnt get it working. -->
-        <form>
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label for="changeName" >Change Soceity Name </label>
-                        <input name="changeName" type="text" class="form-control" id="changeName" placeholder="{{ name }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="changeAcronym" >Change Soceity Acronym </label>
-                        <input name="changeAcronym" type="text" class="form-control" id="changeAcronym" placeholder="{{ acronym }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="changeEmail" >Change Soceity Email </label>
-                        <input name="changeEmail" type="email" class="form-control" id="changeEmail" placeholder="{{ email }}">
-                    </div>
-                    
-                </div>
-                <div class = "col-sm-3">
-                    <div class="form-group">
-                        <label for="changePassword" >Change Soceity Password</label>
-                        <input name="changePassword" type="password" class="form-control" id="changePassword" placeholder="New Password">
-                    </div>
-                    <div class="form-group">
-                        <label for="changePassword2" >Verify Soceity Password</label>
-                        <input name="changePassword2" type="password" class="form-control" id="changePassword2" placeholder="Verify Password">
-                    </div>
-                    <br>
-                    <div>
-                        <center><button type="button" class="btn btn-primary" >Confirm Changes</button></center>
-                    </div>
-                </div>
-                <div class = "col-sm-6">
-                    <br>
+        <div class="row">
+            <div class="col-sm-4">
+                <h2>Update Profile</h2>
+            </div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-4">
+                <h2>Account Settings</h2>
+            </div>
+        </div>
+        <div class="row">
+            <form action="{% url 'socshare:update_profile' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="col-sm-4">
                     <!-- This should edit Profile Picture -->
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
-                        </div>
+                    <div class="form-group">
                         <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="inputGroupFile02"
-                            aria-describedby="inputGroupFileAddon02">
-                          <label class="custom-file-label" for="inputGroupFile02">Choose Profile Picture</label>
+                          <input name="profile" type="file" class="custom-file-input" id="profileUploadImage"
+                            aria-describedby="profileUploadImage">
+                          <label class="custom-file-label" for="profileUploadImage">Profile Image</label>
                         </div>
                     </div>
                     <!-- This should edit Banner -->
-                    <br>
-                    <br>             
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="inputGroupFileAddon03">Upload</span>
-                        </div>
+                    <div class="form-group">
                         <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="inputGroupFile03"
-                            aria-describedby="inputGroupFileAddon03">
-                          <label class="custom-file-label" for="inputGroupFile03">Choose Profile Banner</label>
+                          <input name="banner" type="file" class="custom-file-input" id="bannerUploadImage"
+                            aria-describedby="bannerUploadImage">
+                          <label class="custom-file-label" for="bannerUploadImage">Banner Image</label>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <textarea name="description" class="form-control" id="descriptionInput" rows="8" placeholder="Society Description"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
                 </div>
-        </form>
+            </form>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-4">
+                <form action="{% url 'socshare:update_account' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="changeEmail">Change Email Address</label>
+                        <input name="email" type="email" class="form-control" id="changeEmail" placeholder="{{ email }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="oldPassword">Old Password</label>
+                        <input name="oldPassword" type="password" class="form-control" id="oldPassword" placeholder="Current Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="changePassword">New Password</label>
+                        <input name="password" type="password" class="form-control" id="changePassword" placeholder="New Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="changePassword2">Verify New Password</label>
+                        <input name="passwordVerify" type="password" class="form-control" id="changePassword2" placeholder="Verify Password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Confirm Changes</button>
+                </form>
+            </div>
+        </div>
     </tr>
 </table>
 {% endblock %}

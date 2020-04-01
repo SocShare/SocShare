@@ -19,11 +19,10 @@ def events(request):
         context['search']=search
     return render(request,'socshare/events.html',context=context)
 
-
 def event_page(request, event_slug):
     event = Event.objects.filter(slug = event_slug).get()
     # Neat trick for getting comments associated with the event
-    comments = event.comment_set.all()
+    comments = event.comment_set.order_by('-date')
     context = {"title":"Events","fullscreen":True,"event": event,"comments":comments}
     if request.method=='POST':
         token = request.POST.get('token')
@@ -45,10 +44,32 @@ def event_page(request, event_slug):
     return render(request,'socshare/event.html',context=context)
 
 def edit_event(request, event_slug):
-    event = Event.objects.filter(slug = event_slug)
-    context = {"title":"Events","events": event}
+    event = Event.objects.filter(slug=event_slug).get()
+    if request.method == 'POST':
+        name=request.POST.get('name')
+        date=request.POST.get('date')
+        time=request.POST.get('time')
+        location=request.POST.get('location')
+        url=request.POST.get('url')
+        description=request.POST.get('description')
+        if date:
+            date=datetime.strptime(date+' '+time,'%Y-%m-%d %H:%M')
+            event.date=date
+        if name:
+            event.name=name
+        if description:
+            event.description=description
+        if url:
+            event.ticket_url=url
+        if location:
+            event.location=location
+        banner=request.FILES.get('banner')
+        if banner:
+            event.update_banner(banner)
+        event.save()
+        return redirect(reverse('socshare:dashboard'))
+    context = {"title":"Events","event": event}
     return render(request, 'socshare/edit_event.html', context)
-
 
 def profiles(request):
     search = request.GET.get('search')
@@ -113,8 +134,41 @@ def register(request):
 def dashboard(request):
     if request.user.is_authenticated:
         events = Event.objects.filter(society=request.user.society)
-        return render(request,'socshare/dashboard.html',context={"title":"Dashboard","events":events})
+        return render(request,'socshare/dashboard.html',context={"title":"Dashboard","events":events,'email':request.user.email})
     return redirect(reverse('socshare:events'))
+
+def update_profile(request):
+    if request.method=='POST':
+        society=request.user.society
+        banner=request.FILES.get('banner')
+        profile=request.FILES.get('profile')
+        description=request.POST.get('description')
+        if banner:
+            society.update_banner(banner)
+        if profile:
+            society.update_profile(profile)
+        if description:
+            society.description=description
+    return redirect(reverse('socshare:dashboard'))
+
+def update_account(request):
+    if request.method=='POST':
+        email=request.POST.get('description')
+        old=request.POST.get('oldPassword')
+        password=request.POST.get('password')
+        password_verify=request.POST.get('passwordVerify')
+        if email:
+            if settings.PROD or check_email(email):
+                request.user.email=email
+        if old and password and password_verify:
+            user = authenticate(username=request.user.username, password=old)
+            if user:
+                if password==password_verify:
+                    user.set_password(password)
+                    user.save()
+                    # automatically log user back in
+                    login(request, user)
+    return redirect(reverse('socshare:dashboard'))
 
 def add_event(request):
     if request.user.is_authenticated:
@@ -125,18 +179,21 @@ def add_event(request):
             location=request.POST.get('location')
             url=request.POST.get('url')
             description=request.POST.get('description')
-            date=datetime.strptime(date+' '+time,'%Y-%m-%d %H:%M')
-            event = Event.objects.get_or_create(name=name,society=request.user.society)[0]
-            event.description=description
-            event.date=date
-            event.ticket_url=url
-            event.society=request.user.society
-            event.location=location
-            banner=request.FILES.get('banner')
-            if banner:
-                event.banner=banner
-            event.save()
-            return redirect(reverse('socshare:dashboard'))
+            if name and date and time and location and description:
+                date=datetime.strptime(date+' '+time,'%Y-%m-%d %H:%M')
+                event = Event.objects.get_or_create(name=name,society=request.user.society)[0]
+                event.description=description
+                event.date=date
+                event.ticket_url=url
+                event.society=request.user.society
+                event.location=location
+                banner=request.FILES.get('banner')
+                if banner:
+                    event.banner=banner
+                event.save()
+                return redirect(reverse('socshare:dashboard'))
+            events = Event.objects.filter(society=request.user.society)
+            return render(request,'socshare/dashboard.html',context={"title":"Dashboard","events":events,'alert':'danger','alert_msg':'Enter all the required fields!'})
     return redirect(reverse('socshare:events'))
 
 def remove_event(request,event_slug):
@@ -173,32 +230,3 @@ def user_profile(request):
         }
         return render(request,'socshare/profile.html',context=context)
     return redirect(reverse('socshare:login'))
-
-
-def test(request):
-    registered = False
-    if request.method == 'POST':
-        user_form = UserForm(request.POST)
-        profile_form = SocietyForm(request.POST)
-
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.save()
-            profile = profile_form.save(commit=False)
-            profile.user = user
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-
-            profile.save()
-            registered=True
-        else:
-            print(user_form.errors, profile_form.errors)
-    else:
-        user_form = UserForm()
-        profile_form = SocietyForm()
-
-    return render(request, 'socshare/test.html',
-                context={'user_form':user_form,
-                        'profile_form':profile_form,
-                        'registered':registered})

@@ -18,6 +18,18 @@ class Society(models.Model):
         self.slug = slugify(self.acronym)
         super(Society, self).save(*args, **kwargs)
 
+    def update_banner(self, img):
+        if self.banner:
+            if not 'default' in self.banner.url:
+                self.banner.delete()
+        self.banner=img
+
+    def update_profile(self, img):
+        if self.profile:
+            if not 'default' in self.profile.url:
+                self.profile.delete()
+        self.profile=img
+
     class Meta:
         verbose_name_plural = 'Societies'
 
@@ -42,6 +54,12 @@ class Event(models.Model):
             if not 'default' in self.banner.url:
                 self.banner.delete()
         super(Event, self).delete(*args, **kwargs)
+
+    def update_banner(self, img):
+        if self.banner:
+            if not 'default' in self.banner.url:
+                self.banner.delete()
+        self.banner=img
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

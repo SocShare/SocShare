@@ -4,13 +4,12 @@
 {% block container %}
 <br>
 <table>
-    {% for e in events %}
     <tr>
         <br>
         <br>
         <div class="row justify-content-around">
             <div class="col-sm-7">
-                <h2>Edit {{ e.name }} Event</h2>
+                <h2>Edit "{{ event.name }}"</h2>
             </div>
             <div class="col-sm-4">
                 <br>
@@ -24,11 +23,11 @@
         <div class="row justify-content-around">
             <div class="col-sm-6">
                 <!-- First coloum Form  -->
-                <form action="{% url 'socshare:add_event' %}" method='POST' enctype="multipart/form-data">
+                <form method='POST' enctype="multipart/form-data">
                     {% csrf_token %}
                     <!-- First Row -->
                     <div class="form-group">
-                    <input name="name" type="text" class="form-control" id="nameInput" placeholder = "Event Name" value="{{ e.name }}">
+                    <input name="name" type="text" class="form-control" id="nameInput" placeholder = "Event Name" value="{{ event.name }}">
                     </div>
                     <!-- Second Row -->
                     <div class="row">
@@ -44,7 +43,7 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <input name="location" type="text" class="form-control" id="locationInput" placeholder="Location"   value = "{{ e.location }}">
+                                <input name="location" type="text" class="form-control" id="locationInput" placeholder="Location"   value = "{{ event.location }}">
                             </div>
                         </div>
                     </div>
@@ -52,7 +51,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input name="url" type="url" class="form-control" id="urlInput" placeholder="Tickets URL" value = "{{ e.ticket_url }}">
+                                <input name="url" type="url" class="form-control" id="urlInput" placeholder="Tickets URL" value = "{{ event.ticket_url }}">
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -78,16 +77,16 @@
             <div class="col-sm-1"></div>
             <div class="col-sm-4">
                 <div class="card">
-                    <img src="{{ MEDIA_URL }}/event_banner/default.png" class="card-img-top" alt="Card image">
+                    <img src="{{ MEDIA_URL}}{{ event.banner }}" class="card-img-top" alt="Card image">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm">
-                                <h5 id="live-name" class="card-title">{{ e.name }}</h5>
+                                <h5 id="live-name" class="card-title">{{ event.name }}</h5>
                             </div>
                         </div>
-                        <p id="live-desc" class="card-text">{{ e.description_short }}</p>
+                        <p id="live-desc" class="card-text">{{ event.description_short }}</p>
                         <!-- This button does litreally nothing for live view -->
-                        <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Read More</a>
+                        <a href="{% url 'socshare:events' %}{{ event.slug }}" class="btn btn-primary color-main">Read More</a>
                     </div>
                 </div>
             </div>
@@ -101,6 +100,5 @@
             </script>
         </div>
     </tr>
-    {% endfor %}
 </table>
 {% endblock %}
