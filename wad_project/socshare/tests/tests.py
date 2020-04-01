@@ -79,7 +79,10 @@ class SocietyLoginAndLogout(TestCase):
     Login to a page and verify that the session is vaild
     """
     def test_login(self):
-        pass
+        print("this is successful")
+        self.assertTrue(False)
+        self.assertTrue(c.login(username=vaild_email,password="test"))
+        
 
     """
     Logout of a page and verify that the session has ended
@@ -129,4 +132,11 @@ class Events(TestCase):
 Testing the Dashboard Page
 """
 class Dashboard(TestCase):
+    pass
+
+
+"""
+Testing the Calendar Page
+"""
+class Calendar(TestCase):
     pass
