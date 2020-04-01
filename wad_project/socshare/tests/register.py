@@ -40,5 +40,5 @@ class CheckRegistration(TestCase):
         Testing that registration function does not accept null fields
     """
     def test_register_vaild_email_with_nulls(self):
-        resp = c.post(reverse('socshare:register'),{"email":vaild_email,"password":'',"verify":'',"name":'',"acronym":''})
-        self.assertTrue(resp.context != None and resp.context["alert_msg"] != None)
+        suc,k = nulls_fuzzer(reverse('socshare:register'),{"email":vaild_email,"password":'',"verify":'',"name":'',"acronym":''})
+        self.assertTrue(suc,f"The first field to inccorrectly accept a null was {k}")

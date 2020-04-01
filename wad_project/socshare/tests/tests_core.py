@@ -15,10 +15,12 @@ c = Client()
 
 def nulls_fuzzer(url,valid_input,required_mask=None):
     for i,k in enumerate(valid_input):
-        resp = c.post(url,)
-        if resp.context != None and resp.context["alert_msg"] != None:
+        test_input = valid_input.copy()
+        test_input[k] = ""
+        resp = c.post(url,test_input)
+        if not (resp.context != None and resp.context["alert_msg"] != None):
             if required_mask == None:
-                return False
+                return False,k
             elif required_mask[i] == 1:
-                return False
+                return False,k
     return True
