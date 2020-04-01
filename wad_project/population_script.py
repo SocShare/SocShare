@@ -21,6 +21,7 @@ def populate():
         'banner':'profile_banner/matrix.png',
         'events':[{'name':'Hackerspace',
                 'location':'55.873921, -4.291174',
+                'ticket_url':'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                 'description':'''
                 Come along to our weekly hacking socials, anyone is welcome – even if you’ve never touched a computer before. A hackerspace is a place where you can work on your projects, chat with others, make new things and learn. 
 There are no official workshops, lectures or talks going on (although we may have the occasional guest speaker in), so feel free to show up and do your own thing or we can give you some challenges and point you in the right direction. 
@@ -99,19 +100,20 @@ def add_user(name,email,society=None):
         add_society(society['name'],society['acronym'],society['events'],user,profile=society.get('profile'),banner=society.get('banner'))
     return user
 
-def add_society(name,acronym,events,user,profile=None,banner=None):
+def add_society(name,acronym,events,user, ticket_url=None,profile=None,banner=None):
     society = Society.objects.get_or_create(name=name, user=user)[0]
     society.acronym = acronym
     if profile: society.profile = profile 
     if banner: society.banner = banner
     society.save()
-    events = [add_event(x['name'],x['description'],x['date'],society,banner=x.get('banner'),location=x.get('location')) for x in events]
+    events = [add_event(x['name'],x['description'],x['date'],society,banner=x.get('banner'),location=x.get('location'), ticket_url = x.get('ticket_url')) for x in events]
     return society
 
-def add_event(name,description,date,society,banner=None,location=None):
+def add_event(name,description,date,society,ticket_url = None, banner=None,location=None):
     event = Event.objects.get_or_create(name=name,society=society)[0]
     event.description = description
     event.date = date
+    if ticket_url: event.ticket_url = ticket_url
     if banner: event.banner = banner
     if location: event.location = location
     event.save()
