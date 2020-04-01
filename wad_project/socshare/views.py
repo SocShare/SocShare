@@ -23,7 +23,7 @@ def events(request):
 def event_page(request, event_slug):
     event = Event.objects.filter(slug = event_slug).get()
     # Neat trick for getting comments associated with the event
-    comments = event.comment_set.all()
+    comments = event.comment_set.order_by('-date')
     context = {"title":"Events","fullscreen":True,"event": event,"comments":comments}
     if request.method=='POST':
         token = request.POST.get('token')
