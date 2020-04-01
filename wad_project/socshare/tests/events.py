@@ -11,8 +11,10 @@ class Events(TestCase):
     Create an event then try an retrieve it from the DB
     """
     def test_create_events(self):
-        login_with_vaild()
+        # login_with_vaild()
+        print(c.login(username=slugify(valid_login["username"]),password=valid_login["password"]))
         resp = c.post(reverse('socshare:add_event'),valid_event)
+        print(resp)
         self.assertTrue(resp.context == None,"")
         event = Event.objects.filter(slug=slugify(valid_event["name"])).get()
 
