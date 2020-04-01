@@ -45,8 +45,34 @@ def event_page(request, event_slug):
     return render(request,'socshare/event.html',context=context)
 
 def edit_event(request, event_slug):
-    event = Event.objects.filter(slug = event_slug)
-    context = {"title":"Events","events": event}
+    event = Event.objects.filter(slug=event_slug).get()
+    if request.method == 'POST':
+        name=request.POST.get('name')
+        date=request.POST.get('date')
+        time=request.POST.get('time')
+        location=request.POST.get('location')
+        url=request.POST.get('url')
+        description=request.POST.get('description')
+        if date:
+            date=datetime.strptime(date+' '+time,'%Y-%m-%d %H:%M')
+            event.date=date
+        if name:
+            event.name=name
+        if description:
+            event.description=description
+        if url:
+            event.ticket_url=url
+        if location:
+            event.location=location
+        banner=request.FILES.get('banner')
+        if banner:
+            if event.banner:
+                if not 'default' in event.banner.url:
+                    event.banner.delete()
+            event.banner=banner
+        event.save()
+        return redirect(reverse('socshare:dashboard'))
+    context = {"title":"Events","event": event}
     return render(request, 'socshare/edit_event.html', context)
 
 
