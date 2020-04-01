@@ -9,10 +9,10 @@ class SocietyLoginAndLogout(TestCase):
     Login to a page and verify that the session is vaild
     """
     def test_login(self):
-        c.post(reverse('socshare:register'),{"email":vaild_email,"password":'test',"verify":'test',"name":'This is a test',"acronym":'tiat'})
-        resp = c.post(reverse('socshare:login'),{"email":vaild_email,"password":'test'})
+        c.post(reverse('socshare:register'),valid_registration)
+        resp = c.post(reverse('socshare:login'),valid_login)
         self.assertTrue(resp.context == None)
-        self.assertTrue(c.login(username=slugify('This is a test'),password="test"))
+        self.assertTrue(login_with_vaild())
         
     """
     Logout of a page and verify that the session has ended
@@ -21,3 +21,9 @@ class SocietyLoginAndLogout(TestCase):
         resp = c.get(reverse('socshare:logout'))
         self.assertTrue(resp.context == None)
 
+    """
+    Login to a page and verify that the session is vaild
+    """
+    def test_login_with_nulls(self):
+        suc,k = nulls_fuzzer(reverse('socshare:login'),valid_login)
+        self.assertTrue(suc,f"The first field to inccorrectly accept a null was {k}")
