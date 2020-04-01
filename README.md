@@ -15,7 +15,9 @@
     <img src="images/example.png" alt="Screenshot">
 </p>
 
-SocShare is a website for societies at the University of Glasgow. The site was built with both societies and students in mind: a central place for societies to advertise their events and somewhere for students to view all upcoming events.
+SocShare is a website for societies at the University of Glasgow. The site was built with both societies and students in mind: a central place for societies to advertise their events and somewhere for students to view all upcoming events.  
+  
+You can visit the website live at: http://socshare.pythonanywhere.com
 
 ### Built With
 The major frameworks involved in creating the website:
@@ -30,8 +32,8 @@ The major frameworks involved in creating the website:
 ```sh
 git clone https://github.com/SocShare/SocShare.git
 ```
-1. Create a Python virtual environment (optional) with Python 3.6+
-2. Install the required packages
+2. Create a Python virtual environment (optional) with Python 3.6+
+3. Install the required packages
 ```sh
 pip install -r requirements.txt
 ```
