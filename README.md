@@ -30,8 +30,8 @@ The major frameworks involved in creating the website:
 ```sh
 git clone https://github.com/SocShare/SocShare.git
 ```
-1. Create a Python virtual environment (optional) with Python 3.6+
-2. Install the required packages
+2. Create a Python virtual environment (optional) with Python 3.6+
+3. Install the required packages
 ```sh
 pip install -r requirements.txt
 ```
