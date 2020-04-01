@@ -16,7 +16,9 @@ class Events(TestCase):
     Edit an event then try an retrieve it from the DB
     """
     def test_edit_events(self):
-        pass
+        # print(reverse('socshare:edit_event',kwargs={"event_slug":slugify(valid_event["name"])}))
+        resp = c.post(reverse('socshare:edit_event',kwargs={"event_slug":slugify(valid_event["name"])}),copy_modify(valid_event,"description","CANCELLED DUE TO COVID-19"))
+        self.assertTrue(resp.context == None,"")
 
     """
     Test the events page's ability to render events

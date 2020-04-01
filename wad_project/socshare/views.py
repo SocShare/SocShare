@@ -44,6 +44,7 @@ def event_page(request, event_slug):
     return render(request,'socshare/event.html',context=context)
 
 def edit_event(request, event_slug):
+    print(event_slug)
     event = Event.objects.filter(slug=event_slug).get()
     if request.method == 'POST':
         name=request.POST.get('name')
