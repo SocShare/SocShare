@@ -16,14 +16,16 @@ non_vaild_email = "example@example.co.uk"
 
 c = Client()
 
+
+"""
+Tests the SRC test
+"""
 class SRCCheckTest(TestCase):
+
     """
-    Tests the SRC test
+    Tests to see if the check_email function is working correctly.
     """
     def test_SRC_Check(self):
-        """
-        Tests to see if the check_email function is working correctly.
-        """
         self.assertTrue(check_email("pausegaminglan@gmail.com"))
         self.assertFalse(check_email("example@example.co.uk"))
 
@@ -67,3 +69,33 @@ class CheckRegistration(TestCase):
     def test_register_vaild_email_with_nulls(self):
         resp = c.post(reverse('socshare:register'),{"email":vaild_email,"password":'',"verify":'',"name":'',"acronym":''})
         self.assertTrue(resp.context != None and resp.context["alert_msg"] != None)
+
+"""
+Testing the Events Page, Events Editing and Events creation functionality
+"""
+class Events(TestCase):
+
+    """
+    Create an event then try an retrieve it from the DB
+    """
+    def test_create_events(self):
+        pass
+
+    """
+    Edit an event then try an retrieve it from the DB
+    """
+    def test_edit_events(self):
+        pass
+
+    """
+    Test the events page's ability to render events
+    """
+    def test_events_page(self):
+        pass
+
+
+    """
+    Remove an event then try an retrieve it from the DB
+    """
+    def test_remove_events(self):
+        pass
