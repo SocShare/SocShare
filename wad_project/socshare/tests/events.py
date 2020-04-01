@@ -1,5 +1,7 @@
 from socshare.tests.tests_core import *
 
+from socshare.models import Event
+
 """
 Testing the Events Page, Events Editing and Events creation functionality
 """
@@ -11,6 +13,7 @@ class Events(TestCase):
     def test_create_events(self):
         resp = c.post(reverse('socshare:add_event'),valid_event)
         self.assertTrue(resp.context == None,"")
+        event = Event.objects.filter(slug=slugify(valid_event["name"])).get()
 
     """
     Edit an event then try an retrieve it from the DB
