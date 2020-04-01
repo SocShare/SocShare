@@ -16,7 +16,7 @@ comments = [
 
 def populate():
     gusec = {'name':'Glasgow University Security Society',
-        'acronym':'GUSEC',
+        'acronym':'gusec',
         'profile':'profile/logo_blue.png',
         'banner':'profile_banner/matrix.png',
         'events':[{'name':'Hackerspace',
@@ -32,7 +32,7 @@ We'll be in the QMU CS study zone at 5:30.
                 }]
         }
     guts = {'name':'Glasgow University Tech Society',
-            'acronym':'GUTS',
+            'acronym':'guts',
             'profile':'profile/guts.jpg',
             'banner':'profile_banner/matrix.png',
             'events':[{'name':'Hackathon',
@@ -66,7 +66,7 @@ Come for an opportunity to make friends, solve interesting challenges, and, most
                     }]
             }
     bms = {'name':'Bad Movie Society',
-            'acronym':'BMS',
+            'acronym':'bms',
             'banner':'profile_banner/Bad-Movie.png',
             'events':[{'name':'Bad Movie Night',
                     'description':'''
@@ -121,7 +121,7 @@ def add_event(name,description,date,society,banner=None,location=None):
 
 def add_comment(content, event):
     comment = Comment.objects.get_or_create(content=content, event=event)[0]
-    comment.token='test_token'
+    comment.auth='test_token'
     comment.save()
     return comment
 
