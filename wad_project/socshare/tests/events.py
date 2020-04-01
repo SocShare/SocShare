@@ -11,6 +11,7 @@ class Events(TestCase):
     Create an event then try an retrieve it from the DB
     """
     def test_create_events(self):
+        login_with_vaild()
         resp = c.post(reverse('socshare:add_event'),valid_event)
         self.assertTrue(resp.context == None,"")
         event = Event.objects.filter(slug=slugify(valid_event["name"])).get()
@@ -19,7 +20,6 @@ class Events(TestCase):
     Edit an event then try an retrieve it from the DB
     """
     def test_edit_events(self):
-        # print(reverse('socshare:edit_event',kwargs={"event_slug":slugify(valid_event["name"])}))
         resp = c.post(reverse('socshare:edit_event',kwargs={"event_slug":slugify(valid_event["name"])}),copy_modify(valid_event,"description","CANCELLED DUE TO COVID-19"))
         self.assertTrue(resp.context == None,"")
 
