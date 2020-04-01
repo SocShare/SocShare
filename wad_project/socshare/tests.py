@@ -71,6 +71,25 @@ class CheckRegistration(TestCase):
         self.assertTrue(resp.context != None and resp.context["alert_msg"] != None)
 
 """
+Testing the login and logout functionality of the site
+"""
+class SocietyLoginAndLogout(TestCase):
+
+    """
+    Login to a page and verify that the session is vaild
+    """
+    def test_login(self):
+        pass
+
+    """
+    Logout of a page and verify that the session has ended
+    """
+    def test_login(self):
+        pass
+
+
+
+"""
 Testing the Events Page, Events Editing and Events creation functionality
 """
 class Events(TestCase):
@@ -93,9 +112,21 @@ class Events(TestCase):
     def test_events_page(self):
         pass
 
+    """
+    Tests the page for an individual event
+    """
+    def test_event_page(self):
+        pass
+
 
     """
     Remove an event then try an retrieve it from the DB
     """
     def test_remove_events(self):
         pass
+
+"""
+Testing the Dashboard Page
+"""
+class Dashboard(TestCase):
+    pass
