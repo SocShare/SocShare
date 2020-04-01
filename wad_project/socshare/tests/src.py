@@ -12,5 +12,5 @@ class SRCCheckTest(TestCase):
     Tests to see if the check_email function is working correctly.
     """
     def test_SRC_Check(self):
-        self.assertTrue(check_email("pausegaminglan@gmail.com"))
-        self.assertFalse(check_email("example@example.co.uk"))
+        self.assertTrue(check_email("pausegaminglan@gmail.com"),"Doesn't Accept Valid Email (Check that pausegaminglan@gmail.com is still a valid SRC affiliated society email)")
+        self.assertFalse(check_email("example@example.co.uk"),"Accepts Invalid Email")

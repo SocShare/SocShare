@@ -20,4 +20,3 @@ class SocietyLoginAndLogout(TestCase):
     def test_logout(self):
         resp = c.get(reverse('socshare:logout'))
         self.assertTrue(resp.context == None)
-
