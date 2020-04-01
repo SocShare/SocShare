@@ -107,6 +107,8 @@ def register(request):
         verify = request.POST.get('verify')
         name = request.POST.get('name')
         acronym = request.POST.get('acronym').lower()
+        if not all([email,password,verify,name,acronym]):
+            return render(request,'socshare/register.html',context={'alert':'warning','alert_msg':'Please fill in all the fields!'})
         if password == verify:
             if settings.PROD or check_email(email):
                 if User.objects.filter(email=email).count()!=0:
@@ -179,7 +181,7 @@ def add_event(request):
             location=request.POST.get('location')
             url=request.POST.get('url')
             description=request.POST.get('description')
-            if name and date and time and location and description:
+            if all([name,date,time,location,description]):
                 date=datetime.strptime(date+' '+time,'%Y-%m-%d %H:%M')
                 event = Event.objects.get_or_create(name=name,society=request.user.society)[0]
                 event.description=description
