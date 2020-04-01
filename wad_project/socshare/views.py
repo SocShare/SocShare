@@ -143,17 +143,31 @@ def update_profile(request):
         banner=request.FILES.get('banner')
         profile=request.FILES.get('profile')
         description=request.POST.get('description')
-        print(request.FILES)
         if banner:
             society.update_banner(banner)
         if profile:
             society.update_profile(profile)
         if description:
             society.description=description
-        society.save()
     return redirect(reverse('socshare:dashboard'))
 
 def update_account(request):
+    if request.method=='POST':
+        email=request.POST.get('description')
+        old=request.POST.get('oldPassword')
+        password=request.POST.get('password')
+        password_verify=request.POST.get('passwordVerify')
+        if email:
+            # SRC checks
+            request.user.email=email
+        if old and password and password_verify:
+            user = authenticate(username=request.user.username, password=old)
+            if user:
+                if password==password_verify:
+                    user.set_password(password)
+                    user.save()
+                    # automatically log user back in
+                    login(request, user)
     return redirect(reverse('socshare:dashboard'))
 
 def add_event(request):

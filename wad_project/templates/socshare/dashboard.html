@@ -195,16 +195,20 @@
                 <form action="{% url 'socshare:update_account' %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="changeEmail">Update Society Email</label>
-                        <input name="changeEmail" type="email" class="form-control" id="changeEmail" placeholder="{{ email }}">
+                        <label for="changeEmail">Change Email Address</label>
+                        <input name="email" type="email" class="form-control" id="changeEmail" placeholder="{{ email }}">
                     </div>
                     <div class="form-group">
-                        <label for="changePassword">Change Society Password</label>
-                        <input name="changePassword" type="password" class="form-control" id="changePassword" placeholder="New Password">
+                        <label for="oldPassword">Old Password</label>
+                        <input name="oldPassword" type="password" class="form-control" id="oldPassword" placeholder="New Password">
                     </div>
                     <div class="form-group">
-                        <label for="changePassword2">Verify Society Password</label>
-                        <input name="changePassword2" type="password" class="form-control" id="changePassword2" placeholder="Verify Password">
+                        <label for="changePassword">New Password</label>
+                        <input name="password" type="password" class="form-control" id="changePassword" placeholder="New Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="changePassword2">Verify New Password</label>
+                        <input name="passwordVerify" type="password" class="form-control" id="changePassword2" placeholder="Verify Password">
                     </div>
                     <button type="submit" class="btn btn-primary">Confirm Changes</button>
                 </form>
