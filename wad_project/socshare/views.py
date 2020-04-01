@@ -19,7 +19,6 @@ def events(request):
         context['search']=search
     return render(request,'socshare/events.html',context=context)
 
-
 def event_page(request, event_slug):
     event = Event.objects.filter(slug = event_slug).get()
     # Neat trick for getting comments associated with the event
@@ -74,7 +73,6 @@ def edit_event(request, event_slug):
         return redirect(reverse('socshare:dashboard'))
     context = {"title":"Events","event": event}
     return render(request, 'socshare/edit_event.html', context)
-
 
 def profiles(request):
     search = request.GET.get('search')

@@ -153,71 +153,64 @@
         </div>
         <hr width="85%">
     </tr>
-    <!-- Soceity Settings -->
+    <!-- Society Settings -->
     <tr>
-        <br>
-        <h2> Society Settings </h2> 
-        <br>
-        <!-- This fourm needs to be mereged with the views.py, I couldnt get it working. -->
-        <form>
-            <div class="row">
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label for="changeName" >Change Soceity Name </label>
-                        <input name="changeName" type="text" class="form-control" id="changeName" placeholder="{{ name }}">
+        <div class="row">
+            <div class="col-sm-4">
+                <h2>Update Profile</h2>
+            </div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-4">
+                <h2>Account Settings</h2>
+            </div>
+        </div>
+        <div class="row">
+            <form method="POST">
+                <div class="col-sm-4">
+                    <br />
+                    <!-- This should edit Profile Picture -->
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input name="profile" type="file" class="custom-file-input" id="inputGroupFile02"
+                            aria-describedby="inputGroupFileAddon02">
+                            <label class="custom-file-label" for="inputGroupFile02">Profile Picture</label>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="changeAcronym" >Change Soceity Acronym </label>
-                        <input name="changeAcronym" type="text" class="form-control" id="changeAcronym" placeholder="{{ acronym }}">
+                    <br />
+                    <!-- This should edit Banner -->
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input name="banner" type="file" class="custom-file-input" id="inputGroupFile03"
+                            aria-describedby="inputGroupFileAddon03">
+                            <label class="custom-file-label" for="inputGroupFile03">Profile Banner</label>
+                        </div>
                     </div>
+                    <br />
                     <div class="form-group">
-                        <label for="changeEmail" >Change Soceity Email </label>
+                        <textarea name="description" class="form-control" id="descriptionInput" rows="8" placeholder="Event Description" required="true"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary">Update Profile</button>
+                </div>
+            </form>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-4">
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="changeEmail">Update Society Email</label>
                         <input name="changeEmail" type="email" class="form-control" id="changeEmail" placeholder="{{ email }}">
                     </div>
-                    
-                </div>
-                <div class = "col-sm-3">
                     <div class="form-group">
-                        <label for="changePassword" >Change Soceity Password</label>
+                        <label for="changePassword">Change Society Password</label>
                         <input name="changePassword" type="password" class="form-control" id="changePassword" placeholder="New Password">
                     </div>
                     <div class="form-group">
-                        <label for="changePassword2" >Verify Soceity Password</label>
+                        <label for="changePassword2">Verify Society Password</label>
                         <input name="changePassword2" type="password" class="form-control" id="changePassword2" placeholder="Verify Password">
                     </div>
-                    <br>
-                    <div>
-                        <center><button type="button" class="btn btn-primary" >Confirm Changes</button></center>
-                    </div>
-                </div>
-                <div class = "col-sm-6">
-                    <br>
-                    <!-- This should edit Profile Picture -->
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
-                        </div>
-                        <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="inputGroupFile02"
-                            aria-describedby="inputGroupFileAddon02">
-                          <label class="custom-file-label" for="inputGroupFile02">Choose Profile Picture</label>
-                        </div>
-                    </div>
-                    <!-- This should edit Banner -->
-                    <br>
-                    <br>             
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="inputGroupFileAddon03">Upload</span>
-                        </div>
-                        <div class="custom-file">
-                          <input type="file" class="custom-file-input" id="inputGroupFile03"
-                            aria-describedby="inputGroupFileAddon03">
-                          <label class="custom-file-label" for="inputGroupFile03">Choose Profile Banner</label>
-                        </div>
-                    </div>
-                </div>
-        </form>
+                    <button type="button" class="btn btn-primary">Confirm Changes</button>
+                </form>
+            </div>
+        </div>
     </tr>
 </table>
 {% endblock %}
