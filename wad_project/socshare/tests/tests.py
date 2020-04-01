@@ -17,6 +17,11 @@ from socshare.tests.register import CheckRegistration
 """
 from socshare.tests.login import SocietyLoginAndLogout
 
+"""
+    Importing and Login Tests
+"""
+from socshare.tests.events import Events
+
 
 
 

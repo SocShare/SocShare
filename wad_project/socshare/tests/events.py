@@ -9,7 +9,8 @@ class Events(TestCase):
     Create an event then try an retrieve it from the DB
     """
     def test_create_events(self):
-        pass
+        resp = c.post(reverse('socshare:add_event'),valid_event)
+        self.assertTrue(resp.context == None,"")
 
     """
     Edit an event then try an retrieve it from the DB
@@ -29,6 +30,12 @@ class Events(TestCase):
     def test_event_page(self):
         pass
 
+    """
+    Remove an event then try an retrieve it from the DB
+    """
+    def test_create_events_fuzz(self):
+        suc,k = nulls_fuzzer(reverse('socshare:add_event'),valid_event,required_mask={"url":0})
+        self.assertTrue(suc,f"The first field to inccorrectly accept a null was {k}")
 
     """
     Remove an event then try an retrieve it from the DB
