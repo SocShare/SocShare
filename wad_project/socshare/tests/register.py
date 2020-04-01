@@ -24,6 +24,9 @@ class CheckRegistration(TestCase):
         resp = c.post(reverse('socshare:register'),{"email":vaild_email,"password":'test',"verify":'test',"name":'This is a test',"acronym":'tiat'})
         self.assertTrue(resp.context != None and resp.context["alert_msg"] == failure_message)
 
+        # Asserts that the user has been registered
+        self.assertTrue(c.login(username=slugify('This is a test'),password="test"))
+
     """
     Testing that registration function does not accept non matching passwords
     """
