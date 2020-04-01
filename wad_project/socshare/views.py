@@ -151,18 +151,21 @@ def add_event(request):
             location=request.POST.get('location')
             url=request.POST.get('url')
             description=request.POST.get('description')
-            date=datetime.strptime(date+' '+time,'%Y-%m-%d %H:%M')
-            event = Event.objects.get_or_create(name=name,society=request.user.society)[0]
-            event.description=description
-            event.date=date
-            event.ticket_url=url
-            event.society=request.user.society
-            event.location=location
-            banner=request.FILES.get('banner')
-            if banner:
-                event.banner=banner
-            event.save()
-            return redirect(reverse('socshare:dashboard'))
+            if name and date and time and location and description:
+                date=datetime.strptime(date+' '+time,'%Y-%m-%d %H:%M')
+                event = Event.objects.get_or_create(name=name,society=request.user.society)[0]
+                event.description=description
+                event.date=date
+                event.ticket_url=url
+                event.society=request.user.society
+                event.location=location
+                banner=request.FILES.get('banner')
+                if banner:
+                    event.banner=banner
+                event.save()
+                return redirect(reverse('socshare:dashboard'))
+            events = Event.objects.filter(society=request.user.society)
+            return render(request,'socshare/dashboard.html',context={"title":"Dashboard","events":events,'alert':'danger','alert_msg':'Enter all the required fields!'})
     return redirect(reverse('socshare:events'))
 
 def remove_event(request,event_slug):

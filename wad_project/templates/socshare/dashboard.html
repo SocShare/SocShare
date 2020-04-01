@@ -52,23 +52,28 @@
         <!-- 3 coloums -->
         <div class="row">
             <div class="col-sm-6">
+                {% if alert %}
+                <div class="alert alert-{{ alert }}" role="alert">
+                    {{ alert_msg }}
+                </div>
+                {% endif %}
                 <!-- First coloum Form  -->
                 <form action="{% url 'socshare:add_event' %}" method='POST' enctype="multipart/form-data">
                     {% csrf_token %}
                     <!-- First Row -->
                     <div class="form-group">
-                      <input name="name" type="text" class="form-control" id="nameInput" placeholder="Event Name">
+                      <input name="name" type="text" class="form-control" id="nameInput" placeholder="Event Name" required="true">
                     </div>
                     <!-- Second Row -->
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">  
-                                <input name="date" type="date" class="form-control" id="dateInput" placeholder="Date">
+                                <input name="date" type="date" class="form-control" id="dateInput" placeholder="Date" required="true">
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <input name="time" type="time" class="form-control" id="timeInput" placeholder="Time">
+                                <input name="time" type="time" class="form-control" id="timeInput" placeholder="Time" required="true">
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -91,7 +96,7 @@
                     </div>
                     <!-- Fourth Row - Description -->
                     <div class="form-group">
-                        <textarea name="description" class="form-control" id="descriptionInput" rows="8" placeholder="Event Description"></textarea>
+                        <textarea name="description" class="form-control" id="descriptionInput" rows="8" placeholder="Event Description" required="true"></textarea>
                     </div>
                     <!-- 5 Row - Map -->
                     <div class="row map m-2">
