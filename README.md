@@ -19,6 +19,7 @@ SocShare is a website for societies at the University of Glasgow. The site was b
 
 ### Built With
 The major frameworks involved in creating the website:
+* [Python 3.7](https://www.python.org/)
 * [Django](https://www.djangoproject.com/)
 * [Bootstrap](https://getbootstrap.com)
 * [JQuery](https://jquery.com)
@@ -29,8 +30,8 @@ The major frameworks involved in creating the website:
 ```sh
 git clone https://github.com/SocShare/SocShare.git
 ```
-2. Create a Python virtual environment (optional)
-3. Install the required packages
+1. Create a Python virtual environment (optional) with Python 3.6+
+2. Install the required packages
 ```sh
 pip install -r requirements.txt
 ```
