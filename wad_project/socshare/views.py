@@ -286,7 +286,6 @@ def remove_event(request,event_slug):
         return redirect(reverse('socshare:dashboard'))
     return redirect(reverse('socshare:events'))
 
-# TODO: Build Test for profile
 def profile(request,profile_slug):
     '''
     Displays profile information for the society.
@@ -301,7 +300,6 @@ def profile(request,profile_slug):
         "events":Event.objects.filter(society=society)}
     return render(request,'socshare/profile.html',context=context)
 
-# TODO: Build Test for user_profile
 def user_profile(request):
     '''
     Pretty much the same as profile, except it's used

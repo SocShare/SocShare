@@ -18,8 +18,8 @@ class Profile(TestCase):
     """
     def test_profile_page(self):
         register_and_login()
-        resp = c.get(reverse('socshare:profile',kwargs={"slug",valid_profile["acronym"]}))
-        suc,k = are_all_elements_present(resp.content,valid_profile)
+        resp = c.get(reverse('socshare:profile',kwargs={"profile_slug":valid_profile["slug"]}))
+        suc,k = are_all_elements_present(resp.content,valid_profile,{"slug":0})
         self.assertTrue(suc,f"Some info about the profile is not shown : {k}")
 
     """
@@ -28,5 +28,5 @@ class Profile(TestCase):
     def test_user_profile_page(self):
         register_and_login()
         resp = c.get(reverse('socshare:user_profile'))
-        suc,k = are_all_elements_present(resp.content,valid_profile)
+        suc,k = are_all_elements_present(resp.content,valid_profile,{"slug":0})
         self.assertTrue(suc,f"Some info about the profile is not shown : {k}")
