@@ -37,12 +37,16 @@ git clone https://github.com/SocShare/SocShare.git
 ```sh
 pip install -r requirements.txt
 ```
-4. Run `population_script.py` to populate the database. This step may print out warnings to do with timezones, however they are not important as it is test data.
+4. You'll need to migrate the database before we can add the test data
 ```sh
 cd wad_project
+python manage.py migrate
+```
+5. Run `population_script.py` to populate the database. This step may print out warnings to do with timezones, however they are not important as it is test data.
+```sh
 python population_script.py
 ```
-5. Now you can run the server, which is accessable at http://localhost:8000 by default
+6. Now you can run the server, which is accessible at http://localhost:8000 by default
 ```sh
 python manage.py runserver
 ```
