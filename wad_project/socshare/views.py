@@ -9,6 +9,7 @@ from django.template.defaultfilters import slugify
 from django.db.models.functions.datetime import datetime
 from django.conf import settings
 import socshare.utils.google_auth as gauth
+from django.http import HttpResponseNotFound
 
 def events(request):
     '''
@@ -28,7 +29,11 @@ def event_page(request, event_slug):
     '''
     Used to display details of an event, including comments
     '''
-    event = Event.objects.filter(slug = event_slug).get()
+    event = Event.objects.filter(slug = event_slug)
+    if event.count()>0:
+        event = event.get()
+    else:
+        return HttpResponseNotFound("<h1>Page Not Found</h1>")
     # Neat trick for getting comments associated with the event
     comments = event.comment_set.order_by('-date')
     context = {"title":"Events","fullscreen":True,"event": event,"comments":comments}

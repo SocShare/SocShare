@@ -8,19 +8,34 @@ from socshare.tests.src import SRCCheckTest
 # Views Testing
 
 """
-    Importing and Register Tests
+    Importing the Register Tests
 """
 from socshare.tests.register import CheckRegistration
 
 """
-    Importing and Login Tests
+    Importing the Login Tests
 """
 from socshare.tests.login import SocietyLoginAndLogout
 
 """
-    Importing and Login Tests
+    Importing the Events Tests
 """
 from socshare.tests.events import Events
+
+"""
+    Importing the Dashboard Tests
+"""
+from socshare.tests.dashboard import Dashboard
+
+"""
+    Importing the Calendar Tests
+"""
+from socshare.tests.calendar import Calendar
+
+"""
+    Importing the Profile Tests
+"""
+from socshare.tests.profile import Profile
 
 
 
