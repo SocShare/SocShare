@@ -46,7 +46,8 @@ We'll be in the QMU CS study zone at 5:30.
             'description':'''GUTS is a student society of hackers. We love everything to do with technology, so we host as many events as we can to bring students closer to the topics that excite them (from human centred security all the way down to the bits and bytes). Our annual hackathon and Cyber Defence Execsie events will give you the opportunity to unleash your creativity and chat to loads of industry experts, so why not come along?
             ''',
             'events':[{'name':'Hackathon',
-                    'description':'''The annual biggest tech event in town is back once again, hosted by the Glasgow University Tech Society! Held in collaboration with the School of Computing Science and influential tech companies based in the UK. This is your chance to show your coding ability, nudge your foot in the industry door or just have fun and eat free pizza!
+                    'description':'''
+                    The annual biggest tech event in town is back once again, hosted by the Glasgow University Tech Society! Held in collaboration with the School of Computing Science and influential tech companies based in the UK. This is your chance to show your coding ability, nudge your foot in the industry door or just have fun and eat free pizza!
 
 The event is open to all students and no previous coding experience is required! If you don't have a team, don’t worry, you can arrange one on the spot! Food and drink are provided to make sure you are at your best the entire way through. 
 
@@ -62,7 +63,8 @@ For further information and a peek at our previous hacks,visit gutechsoc.com/hac
                     'date':datetime.datetime(2020, 9, 30, 9)
                     },
                     {'name':'Hacker Olympics',
-                    'description':'''Glasgow University's Hacker Olympics is a one-day event where teams of students compete to solve as many challenges as they can in order to earn points. The team with the highest number of points at the end wins!
+                    'description':'''
+                    Glasgow University's Hacker Olympics is a one-day event where teams of students compete to solve as many challenges as they can in order to earn points. The team with the highest number of points at the end wins!
 
 If you don't have a team beforehand, you can come along and form one with the people you meet on the day! 
 
