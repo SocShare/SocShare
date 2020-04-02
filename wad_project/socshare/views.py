@@ -207,6 +207,7 @@ def update_profile(request):
             society.update_profile(profile)
         if description:
             society.description=description
+        society.save()
     return redirect(reverse('socshare:dashboard'))
 
 # TODO: Build Test for update_account
