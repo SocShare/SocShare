@@ -108,7 +108,7 @@ def add_society(name,acronym,events,user, ticket_url=None,profile=None,banner=No
     '''
     Helper function to setup a society
     '''
-    society = Society.objects.get_or_create(name=name, user=user).get()
+    society = Society.objects.get_or_create(name=name, user=user)[0]
     society.acronym = acronym
     if profile: society.profile = profile 
     if banner: society.banner = banner
@@ -120,7 +120,7 @@ def add_event(name,description,date,society,ticket_url = None, banner=None,locat
     '''
     Helper function to setup an event
     '''
-    event = Event.objects.get_or_create(name=name,society=society).get()
+    event = Event.objects.get_or_create(name=name,society=society)[0]
     event.description = description
     event.date = date
     if ticket_url: event.ticket_url = ticket_url
@@ -135,7 +135,7 @@ def add_comment(content, event):
     '''
     Helper function to setup a comment
     '''
-    comment = Comment.objects.get_or_create(content=content, event=event).get()
+    comment = Comment.objects.get_or_create(content=content, event=event)[0]
     # Fake Google Auth token for testing
     comment.auth='test_token'
     comment.save()
