@@ -91,6 +91,7 @@ def edit_event(request, event_slug):
     context = {"title":"Events","event": event}
     return render(request, 'socshare/edit_event.html', context)
 
+# TODO: Build Test for Profile
 def profiles(request):
     '''
     Similar to events page, but it shows society
@@ -101,6 +102,7 @@ def profiles(request):
     context = {"title": "Societies", "searchbar":True, "society" : [s for s in societies]}
     return render(request, 'socshare/society.html', context)
 
+# TODO: Build Test for calendar
 def calendar(request):
     '''
     Display events by date and location using a 
@@ -189,6 +191,7 @@ def dashboard(request):
         return render(request,'socshare/dashboard.html',context={"title":"Dashboard","events":events,'email':request.user.email})
     return redirect(reverse('socshare:events'))
 
+# TODO: Build Test for update_profile
 def update_profile(request):
     '''
     Deal with simple profile data updates
@@ -206,6 +209,7 @@ def update_profile(request):
             society.description=description
     return redirect(reverse('socshare:dashboard'))
 
+# TODO: Build Test for update_account
 def update_account(request):
     '''
     Deal with password and email updates. Requires user
@@ -283,6 +287,7 @@ def remove_event(request,event_slug):
         return redirect(reverse('socshare:dashboard'))
     return redirect(reverse('socshare:events'))
 
+# TODO: Build Test for profile
 def profile(request,profile_slug):
     '''
     Displays profile information for the society.
@@ -297,6 +302,7 @@ def profile(request,profile_slug):
         "events":Event.objects.filter(society=society)}
     return render(request,'socshare/profile.html',context=context)
 
+# TODO: Build Test for user_profile
 def user_profile(request):
     '''
     Pretty much the same as profile, except it's used
