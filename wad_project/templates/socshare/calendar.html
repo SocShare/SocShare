@@ -17,7 +17,7 @@
             <div class="row justify-content-between">
                 
                 <div class="col-3" style="padding-top: 6px;"> <a style = "font: 25px; text-transform: uppercase; padding-top: 6px; padding-bottom: 12px;">{{ event.date|date:'d b' }}</a></div>
-                <div class="col-2" style="padding-top: 6px;"><a style = "font: 25px; text-transform: uppercase;  padding-top: 6px; padding-bottom: 12px;">{{ event.date|date:'H:m' }}</a></div>
+                <div class="col-2" style="padding-top: 6px;"><a style = "font: 25px; text-transform: uppercase;  padding-top: 6px; padding-bottom: 12px;">{{ event.date|date:'H:i' }}</a></div>
                 <div class="col-4" style="padding-top: 6px; "><a style = "font: 25px;  padding-top: 6px; padding-bottom: 12px; ">{{ event.name }}</a></div>
                 <div class="col-2"><a href="{% url 'socshare:events' %}{{ event.slug }}" class="btn btn-primary color-main">Read More</a></div>
             </div>

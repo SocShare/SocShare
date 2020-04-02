@@ -102,7 +102,6 @@ def profiles(request):
     context = {"title": "Societies", "searchbar":True, "society" : [s for s in societies]}
     return render(request, 'socshare/society.html', context)
 
-# TODO: Build Test for calendar
 def calendar(request):
     '''
     Display events by date and location using a 
