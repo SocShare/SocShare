@@ -62,5 +62,6 @@ class Events(TestCase):
         add_event()
         resp = c.get(reverse('socshare:remove_event',kwargs={"event_slug":slugify(valid_event["name"])}))
         self.assertTrue(resp.url == "/dashboard/")
+        
         resp = c.get(reverse('socshare:event',kwargs={"event_slug":slugify(valid_event["name"])}))
         self.assertFalse(valid_event["name"] in str(resp.content))
