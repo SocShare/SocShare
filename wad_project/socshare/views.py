@@ -298,6 +298,7 @@ def profile(request,profile_slug):
         "title":society.acronym.upper()+" Profile",
         "name":society.name,
         "fullscreen":True, 
+        "description":society.description,
         "logo":society.profile,
         "banner_img_url":society.banner, 
         "events":Event.objects.filter(society=society)}
