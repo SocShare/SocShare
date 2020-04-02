@@ -253,7 +253,7 @@ def add_event(request):
             if all([name,date,time,location,description]):
                 # combine date and time into one datetime field
                 date=datetime.strptime(date+' '+time,'%Y-%m-%d %H:%M')
-                event = Event.objects.get_or_create(name=name,society=request.user.society).get()
+                event,_ = Event.objects.get_or_create(name=name,society=request.user.society)
                 event.description=description
                 event.date=date
                 event.ticket_url=url
