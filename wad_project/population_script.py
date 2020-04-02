@@ -20,6 +20,12 @@ def populate():
         'acronym':'gusec',
         'profile':'profile/logo_blue.png',
         'banner':'profile_banner/matrix.png',
+        'description':'''Welcome to the official page for Glasgow University Security Society (GUSEC). This will be our main method of communication with members, so if you want to stay updated on events and other workshops then make sure to check the Discord regularly!
+
+If you wish to contact us you can DM a board member, join our discord server or send an email to our society email address: gusecsoc@gmail.com
+
+You can follow us on social media @gusecurity on Instagram and Twitter.
+        ''',
         'events':[{'name':'Hackerspace',
                 'location':'55.873921, -4.291174',
                 'ticket_url':'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
@@ -37,9 +43,10 @@ We'll be in the QMU CS study zone at 5:30.
             'acronym':'guts',
             'profile':'profile/guts.jpg',
             'banner':'profile_banner/matrix.png',
+            'description':'''GUTS is a student society of hackers. We love everything to do with technology, so we host as many events as we can to bring students closer to the topics that excite them (from human centred security all the way down to the bits and bytes). Our annual hackathon and Cyber Defence Execsie events will give you the opportunity to unleash your creativity and chat to loads of industry experts, so why not come along?
+            ''',
             'events':[{'name':'Hackathon',
-                    'description':'''
-                    The annual biggest tech event in town is back once again, hosted by the Glasgow University Tech Society! Held in collaboration with the School of Computing Science and influential tech companies based in the UK. This is your chance to show your coding ability, nudge your foot in the industry door or just have fun and eat free pizza!
+                    'description':'''The annual biggest tech event in town is back once again, hosted by the Glasgow University Tech Society! Held in collaboration with the School of Computing Science and influential tech companies based in the UK. This is your chance to show your coding ability, nudge your foot in the industry door or just have fun and eat free pizza!
 
 The event is open to all students and no previous coding experience is required! If you don't have a team, don’t worry, you can arrange one on the spot! Food and drink are provided to make sure you are at your best the entire way through. 
 
@@ -55,8 +62,7 @@ For further information and a peek at our previous hacks,visit gutechsoc.com/hac
                     'date':datetime.datetime(2020, 9, 30, 9)
                     },
                     {'name':'Hacker Olympics',
-                    'description':'''
-                    Glasgow University's Hacker Olympics is a one-day event where teams of students compete to solve as many challenges as they can in order to earn points. The team with the highest number of points at the end wins!
+                    'description':'''Glasgow University's Hacker Olympics is a one-day event where teams of students compete to solve as many challenges as they can in order to earn points. The team with the highest number of points at the end wins!
 
 If you don't have a team beforehand, you can come along and form one with the people you meet on the day! 
 
@@ -70,6 +76,8 @@ Come for an opportunity to make friends, solve interesting challenges, and, most
     bms = {'name':'Bad Movie Society',
             'acronym':'bms',
             'banner':'profile_banner/Bad-Movie.png',
+            'description':'''The Bad Movie Society is a cult set up for the consumption, appreciation and dissemination of the worst that cinema has to offer. We screen B-movies of every genre and welcome all enthusiasts. Dress code is casual, popcorn is salted.
+            ''',
             'events':[{'name':'Bad Movie Night',
                     'description':'''
                     Cool 80's music, a high profile cast and even a recent Netflix adaptation, so it's in the wrong society? Not quite, some consider it to be one of the worst movies ever (luckily)! If you embrace the film's silliness, you are going to enjoy it though, so come by with your friends, entry is as always free
@@ -96,20 +104,21 @@ def add_user(name,email,society=None):
     '''
     Helper function to setup a user with a default password
     '''
-    user = User.objects.get_or_create(username=name).get()
+    user = User.objects.get_or_create(username=name)[0]
     user.email = email
     user.set_password('password')
     user.save()
     if society:
-        add_society(society['name'],society['acronym'],society['events'],user,profile=society.get('profile'),banner=society.get('banner'))
+        add_society(society['name'],society['acronym'],society['events'],user,profile=society.get('profile'),banner=society.get('banner'),desc=society.get('description'))
     return user
 
-def add_society(name,acronym,events,user, ticket_url=None,profile=None,banner=None):
+def add_society(name,acronym,events,user, ticket_url=None,profile=None,banner=None,desc=None):
     '''
     Helper function to setup a society
     '''
     society = Society.objects.get_or_create(name=name, user=user)[0]
     society.acronym = acronym
+    if desc: society.description = desc
     if profile: society.profile = profile 
     if banner: society.banner = banner
     society.save()
