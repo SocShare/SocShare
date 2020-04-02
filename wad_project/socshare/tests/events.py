@@ -58,4 +58,9 @@ class Events(TestCase):
     Remove an event then try an retrieve it from the DB
     """
     def test_remove_events(self):
-        pass
+        register_and_login()
+        add_event()
+        resp = c.get(reverse('socshare:remove_event',kwargs={"event_slug":slugify(valid_event["name"])}))
+        self.assertTrue(resp.url == "/dashboard/")
+        resp = c.get(reverse('socshare:event',kwargs={"event_slug":slugify(valid_event["name"])}))
+        self.assertFalse(valid_event["name"] in str(resp.content))
