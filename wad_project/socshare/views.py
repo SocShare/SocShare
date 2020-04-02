@@ -10,7 +10,7 @@ from django.template.defaultfilters import slugify
 from django.db.models.functions.datetime import datetime
 from django.conf import settings
 import socshare.utils.google_auth as gauth
-import datetime 
+from django.utils import timezone
 
 def events(request):
     search = request.GET.get('search')
@@ -80,7 +80,7 @@ def profiles(request):
 
 def calendar(request):
     events = Event.objects.order_by('date')
-    now = datetime.datetime.now()
+    now = timezone.now
     context = {"title":"Calendar","events":[x for x in events],"date":now}
     return render(request,'socshare/calendar.html', context=context)
 

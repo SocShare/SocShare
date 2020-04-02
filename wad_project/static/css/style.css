@@ -84,7 +84,9 @@
 .abcRioButtonContentWrapper {
     background-color: #E91D63 !important;
 }
-
+.container{
+    max-width: 1175px;
+}
 /* Start society profile */
 
 .banner-img {

@@ -68,6 +68,28 @@
                     <div class="form-group">
                         <textarea name="description" class="form-control" id="descriptionInput" rows="8" placeholder="New Event Description"></textarea>
                     </div>
+                    <!-- Fivth Row - Map -->
+                    <div class="row map m-2">
+                        <input name="location" type="hidden" class="form-control" id="locationInput" placeholder="Location">
+                        <div id="map" class="flex-grow"></div>
+                        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARBD2ZqlvXBMBK7uOBAQsNcUXvGrVYWJM&callback=initMap"
+                        async defer></script>
+                        <script>
+                            var marker = null;
+                            function continueMap() {
+                                map.addListener('click', function(e) {
+                                    if (marker != null) {
+                                        marker.setMap(null);
+                                    }
+                                    marker = new google.maps.Marker({
+                                        position: e.latLng,
+                                        map: map
+                                    });
+                                    $('input[name="location"]').val(e.latLng.lat() + ', ' + e.latLng.lng());
+                                });
+                            }
+                        </script>
+                    </div>
                     <div>
                         <button type="submit" class="btn btn-primary btn-lg btn-block">Edit Event</button>
                     </div>
