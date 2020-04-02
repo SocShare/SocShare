@@ -2,34 +2,64 @@
 {% load static %}
 
 {% block container %}
-<div class="row flex-grow">
-    <div id="map" class="flex-grow"></div>
+<div class="container">
+    <br /><br />
+    <div class="row justify-content-between">
+        <div class="col-sm-4"><h2> Calendar </h2></div>
+        <div class="col-sm-3">{{ date }}</div>
+    </div>
+    <hr>
+    {% for event in events %}
+    <br>
+    <div class="card">
+        <div class="card-body">    
+            <div class="row justify-content-between">
+                
+                <div class="col-3"> <h4 style = "text-transform: uppercase;">{{ event.date|date:'d b' }}</h4></div>
+                <div class="col-2"><h5>{{ event.date|date:'H:s' }}</h5></div>
+                <div class="col-4"><font size="5">{{ event.name }}</font></div>
+                <div class="col-2"><a href="{% url 'socshare:events' %}{{ event.slug }}" class="btn btn-primary color-main">Read More</a></div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <br>
+    <div class="row justify-content-between">
+        <div class="col-sm-4"><h2> Event Maps  </h2></div>
+    </div>
+    <hr>
+    <div id="map" class="flex-grow" style = "height: 450px;"></div>
     {% if events %}
     {% for e in events %}
-    <marker_data class="gone" location="{{ e.location }}" title="{{ e.name }}" desc="{{ e.description_short }}"></marker_data>
+    <marker_data class="gone" location="{{ e.location }}" title="{{ e.name }}"  desc="{{ e.description_short }}" url="{% url 'socshare:events' %}{{ e.slug }}"></marker_data>
     {% endfor %}
     {% endif %}
+    <br>
+    
     <script>
-      function continueMap() {
-        $('marker_data').each(function(index) {
-            var latlng = $(this).attr("location").split(",");
-            var title = $(this).attr("title");
-            var desc = $(this).attr("desc");
-            var marker = new google.maps.Marker({
-                position: {lat: parseFloat(latlng[0]), lng: parseFloat(latlng[1])},
-                map: map,
-                title: title,
-            });
-            var infowindow = new google.maps.InfoWindow({
-                content: '<h3>' + title + '</h3><br/><p>' + desc + '</p>',
-            });
-            marker.addListener('click', function() {
-                infowindow.open(map, marker);
-            });
-        });
-      }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARBD2ZqlvXBMBK7uOBAQsNcUXvGrVYWJM&callback=initMap"
-    async defer></script>
+        function continueMap() {
+          $('marker_data').each(function(index) {
+              var latlng = $(this).attr("location").split(",");
+              var title = $(this).attr("title");
+              var desc = $(this).attr("desc");
+              var url = $(this).attr("url");
+              var marker = new google.maps.Marker({
+                  position: {lat: parseFloat(latlng[0]), lng: parseFloat(latlng[1])},
+                  url : url,
+                  map: map,
+                  title: title,
+              });
+              var infowindow = new google.maps.InfoWindow({
+                  content: '<h3>'+'<a href = "' +url + '">'+ title + '</a></h3><br/><p>' + desc + '</p>',
+              });
+              marker.addListener('click', function() {
+                  infowindow.open(map, marker);
+              });
+          });
+        }
+      </script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARBD2ZqlvXBMBK7uOBAQsNcUXvGrVYWJM&callback=initMap"
+      async defer></script>
+</div>
 </div>
 {% endblock %}

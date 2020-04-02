@@ -45,8 +45,11 @@
             <div class="content {% if fullscreen %}fullscreen{% endif %}">
                 {% if not fullscreen %}
                 <div class="header">
-                    <button onclick="togglesideBar()">AAA</button>
-                    <b class="ml-2 mr-2">{{ title }}</b>
+                    <!-- <button onclick="togglesideBar()">AAA</button> -->
+                    <button type="button" data-toggle="button" aria-pressed="false" autocomplete="off"  onclick="togglesideBar()" class="btn btn-light">{{ title }}</button>
+                    <!-- <b class="ml-2 mr-2">{{ title }}</b> -->
+                    
+                    <div class="flex-grow"></div>
                     {% if searchbar %}
                     <input type="text" class="form-control small" id="searchbar" placeholder="Search {{ title }}">
                     {% endif %}

@@ -41,56 +41,100 @@
                     <a href="{{ event.ticket_url }}" type="button" class="btn btn-primary">Buy Tickets Here</a>
                 </div>
             </div>
-
+            <br>
         {% endif %}
         <br>
+        
+        <!-- Event Page Map -->
 
-           
-            <!-- Comments should be posted here. not sure how to set a max height for it :) -->
-            <div class="overflow" style ="height:auto;" >
+        {% if event.location %}
+        <div class="row justify-content-center">
+            <div class="col-sm-9" > <h2 style="padding-top: 10px; padding-bottom: 10px;"> Event Maps  </h2>
+                <hr width="75%" style="padding-top: 20px; padding-bottom: 10px;">
+            </div>
+        </div>
+        <div class="container">
+        
+            <div class="row justify-content-between">
+                 <div id="map" class="flex-grow" style = "height: 450px;"></div>
+            </div>
+        </div>
+            <marker_data class="gone" location="{{ event.location }}" title="{{ event.name }}" desc="{{ event.description_short }}" url="{% url 'socshare:events' %}{{ event.slug }}"></marker_data>
+        <br>
+        {% endif %}
 
-                <div class="row justify-content-center">
-                    <div class="col-sm-9"><h3> Comments </h3></div>
+        
+        <script>
+            function continueMap() {
+            $('marker_data').each(function(index) {
+                var latlng = $(this).attr("location").split(",");
+                var title = $(this).attr("title");
+                var desc = $(this).attr("desc");
+                var url = $(this).attr("url");
+                var marker = new google.maps.Marker({
+                    position: {lat: parseFloat(latlng[0]), lng: parseFloat(latlng[1])},
+                    url : url,
+                    map: map,
+                    title: title,
+                });
+                var infowindow = new google.maps.InfoWindow({
+                    content: '<h3>'+'<a href = "' +url + '">'+ title + '</a></h3><br/><p>' + desc + '</p>',
+                });
+                marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+                });
+            });
+            }
+        </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARBD2ZqlvXBMBK7uOBAQsNcUXvGrVYWJM&callback=initMap"
+        async defer></script>
+        
+        <!-- Comments should be posted here. not sure how to set a max height for it :) -->
+        <div class="overflow" style ="height:auto;" >
 
+            <div class="row justify-content-center">
+                <div class="col-sm-9"><h3 style="padding-top: 10px; padding-bottom: 10px;"> Comments </h3>
+                    <hr width="75%" style="padding-top: 10px; padding-bottom: 10px;">
+                </div>
+
+                <div class="col-sm-8">
                     <br>
-                    <div class="col-sm-8">
-                        <br>
-                        {% if alert %}
-                            <div class="alert alert-{{ alert }}" role="alert">
-                                {{ alert_msg }}
-                            </div>
-                        {% endif %}
-                            <form method="POST">
-                                {% csrf_token %}
-                                <div class="card" >
-                                    <ul class="list-group list-group-flush">
-                                    <li class="list-group-item"> <input  name="comment" type="text" class="form-control" id="commentInput" placeholder="Leave a comment..."></li>
-                                    </ul>
-                                </div>
-                                
-                                <input type="hidden" id="authTokenComment" name="token" value="">
-                                <button type="submit" id="commentSubmit" class="btn btn-primary btn-lg btn-block">Post</button>
-                            </form>
-                        <br>
-                        
-                        {% for comment in comments %}
-                        <br>
-                        
+                    {% if alert %}
+                        <div class="alert alert-{{ alert }}" role="alert">
+                            {{ alert_msg }}
+                        </div>
+                    {% endif %}
+                        <form method="POST">
+                            {% csrf_token %}
                             <div class="card" >
-                                <div class="card-header">
-                                    <div class="row">
-                                        <div class="col-auto mr-auto"> {{ comment.name }}</div>
-                                        <div class="col-auto">{{ comment.date }}</div>
-                                    </div>
-                                </div>
                                 <ul class="list-group list-group-flush">
-                                <li class="list-group-item"> {{ comment.content }}</li>
+                                <li class="list-group-item"> <input  name="comment" type="text" class="form-control" id="commentInput" placeholder="Leave a comment..."></li>
                                 </ul>
                             </div>
+                            
+                            <input type="hidden" id="authTokenComment" name="token" value="">
+                            <button type="submit" id="commentSubmit" class="btn btn-primary btn-lg btn-block">Post</button>
+                        </form>
+                    <br>
+                    
+                    {% for comment in comments %}
+                    <br>
+                    
+                        <div class="card" >
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-auto mr-auto"> {{ comment.name }}</div>
+                                    <div class="col-auto">{{ comment.date }}</div>
+                                </div>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                            <li class="list-group-item"> {{ comment.content }}</li>
+                            </ul>
+                        </div>
 
-                        {% endfor %}
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
+        </div>
 </div>
 {% endblock %}
