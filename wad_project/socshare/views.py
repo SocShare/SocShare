@@ -10,7 +10,6 @@ from django.db.models.functions.datetime import datetime
 from django.conf import settings
 import socshare.utils.google_auth as gauth
 from django.http import HttpResponseNotFound
-import datetime 
 from django.utils import timezone
 
 def events(request):
