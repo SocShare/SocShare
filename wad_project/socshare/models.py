@@ -19,7 +19,12 @@ class Society(models.Model):
         super(Society, self).save(*args, **kwargs)
 
     def update_banner(self, img):
+        '''
+        Delete the previous banner and replace with the
+        new banner to free up storage space.
+        '''
         if self.banner:
+            # Make sure it's not the default image
             if not 'default' in self.banner.url:
                 self.banner.delete()
         self.banner=img
@@ -31,6 +36,7 @@ class Society(models.Model):
         self.profile=img
 
     class Meta:
+        # Fix the table name for admin view
         verbose_name_plural = 'Societies'
 
     def __str__(self):
@@ -41,6 +47,7 @@ class Event(models.Model):
     date = models.DateTimeField(default=timezone.now)
     description = models.TextField()
     description_short = models.TextField()
+    # Store as "<longitude>, <latitude>"
     location = models.CharField(max_length=30)
     ticket_url = models.URLField()
     views = models.IntegerField(default=0)
@@ -50,6 +57,10 @@ class Event(models.Model):
     slug = models.SlugField()
 
     def delete(self, *args, **kwargs):
+        '''
+        When the model is deleted, we want to remove
+        the banned from storage.
+        '''
         if self.banner:
             if not 'default' in self.banner.url:
                 self.banner.delete()
@@ -77,6 +88,7 @@ class Comment(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
+        # Create a random name as comments are anonymous
         self.name = random_name()
         super(Comment, self).save(*args, **kwargs)
 
