@@ -2,38 +2,40 @@
 {% load static %}
 
 {% block container %}
-<img src="{{ MEDIA_URL }}{{ banner_img_url }}" class="banner-img" alt="">
-<div class="logo-container">
-    <img src="{{ MEDIA_URL }}{{ logo }}" class="logo" alt="">
-    <h3 class="logo-name">{{ name }}</h3>
-</div>
-<br>
-<br>
-<div class="row justify-content-center">
-    <div class="col-sm-8">
-        <p> {{ description|center:"0" }}</p>
+<div class="content" style = "padding:0px;">
+    <img src="{{ MEDIA_URL }}{{ banner_img_url }}" class="banner-img" alt="Profile Image">
+    <div class="logo-container">
+        <img src="{{ MEDIA_URL }}{{ logo }}" class="logo" alt="">
+        <h3 class="logo-name">{{ name }}</h3>
     </div>
-</div>
-<br>
-<center><h2> Events </h2></center>
-<hr width="60%">
-<br>
-<div class="row row-cols-md-1 row-cols-lg-2 row-cols-xl-3 flex-grow m-5">
-    {% if events %}
-    {% for e in events %}
-    <div class="col mb-4">
-        <div class="card">
-            <img src="{{ MEDIA_URL }}{{ e.banner }}" class="card-img-top" alt="Card image">
-            <div class="card-body">
-                <h5 class="card-title">{{ e.name }}</h5>
-                <p class="card-text">{{ e.description_short }}</p>
-                <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Read More</a>
-            </div>
+    <br>
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+            <p> {{ description|center:"0" }}</p>
         </div>
     </div>
-    {% endfor %}
-    {% else %}
-    <strong>There are no Events scheduled by this society.</strong>
-    {% endif %}
+    <br>
+    <center><h2> Events </h2></center>
+    <hr width="60%">
+    <br>
+    <div class="row row-cols-md-1 row-cols-lg-2 row-cols-xl-3 flex-grow m-5">
+        {% if events %}
+        {% for e in events %}
+        <div class="col mb-4">
+            <div class="card">
+                <img src="{{ MEDIA_URL }}{{ e.banner }}" class="card-img-top" alt="Card image">
+                <div class="card-body">
+                    <h5 class="card-title">{{ e.name }}</h5>
+                    <p class="card-text">{{ e.description_short }}</p>
+                    <a href="{% url 'socshare:events' %}{{ e.slug }}" class="btn btn-primary color-main">Read More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <strong>There are no Events scheduled by this society.</strong>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

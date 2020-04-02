@@ -5,23 +5,24 @@
 <div class="container">
     <br /><br />
     <div class="row justify-content-between">
-        <div class="col-sm-4"><h2> Calendar </h2></div>
-        <div class="col-sm-3">{{ date }}</div>
+        <div class="col-sm-4"><h2> Upcoming Events </h2></div>
+        <div class="col-sm-3" align = "right">{{ date }}</div>
     </div>
     <hr>
+    
     {% for event in events %}
     <br>
-    <div class="card">
+    <center><div class="card">
         <div class="card-body">    
             <div class="row justify-content-between">
                 
-                <div class="col-3"> <h4 style = "text-transform: uppercase;">{{ event.date|date:'d b' }}</h4></div>
-                <div class="col-2"><h5>{{ event.date|date:'H:s' }}</h5></div>
-                <div class="col-4"><font size="5">{{ event.name }}</font></div>
+                <div class="col-3" style="padding-top: 6px;"> <a style = "font: 25px; text-transform: uppercase; padding-top: 6px; padding-bottom: 12px;">{{ event.date|date:'d b' }}</a></div>
+                <div class="col-2" style="padding-top: 6px;"><a style = "font: 25px; text-transform: uppercase;  padding-top: 6px; padding-bottom: 12px;">{{ event.date|date:'H:m' }}</a></div>
+                <div class="col-4" style="padding-top: 6px; "><a style = "font: 25px;  padding-top: 6px; padding-bottom: 12px; ">{{ event.name }}</a></div>
                 <div class="col-2"><a href="{% url 'socshare:events' %}{{ event.slug }}" class="btn btn-primary color-main">Read More</a></div>
             </div>
         </div>
-    </div>
+    </div></center>
     {% endfor %}
     <br>
     <div class="row justify-content-between">
