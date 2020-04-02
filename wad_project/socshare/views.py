@@ -10,6 +10,7 @@ from django.db.models.functions.datetime import datetime
 from django.conf import settings
 import socshare.utils.google_auth as gauth
 from django.http import HttpResponseNotFound
+import datetime 
 
 def events(request):
     '''
@@ -108,7 +109,8 @@ def calendar(request):
     calendar and map.
     '''
     events = Event.objects.order_by('date')
-    context = {"title":"Calendar","events":[x for x in events]}
+    now = datetime.datetime.now()
+    context = {"title":"Calendar","events":[x for x in events],"date":now}
     return render(request,'socshare/calendar.html', context=context)
 
 def login_page(request):
