@@ -213,6 +213,7 @@ def profile(request,profile_slug):
     context = {
         "title":society.acronym.upper()+" Profile",
         "name":society.name,
+        "description": society.description,
         "fullscreen":True, 
         "logo":society.profile,
         "banner_img_url":society.banner, 
