@@ -6,12 +6,13 @@ from socshare.models import Society, Event, Comment
 from django.contrib.auth.models import User
 import datetime
 
+# Had to make the comments global due to some scope issues, sorry :c
 comments = [
         {'content':'Nice event, very cool!'},
         {'content':'Awesome!'},
         {'content':'Disappointing event, lost my sister and was unable to find her for a solid 20 minutes...'},
         {'content':'I like this, thank you :D'},
-        {'content':'I have a personal grudge against Ryan Murphy and therefore dislike this event'}
+        {'content':'Spent so long doing my WAD project that I completely forgot to go. Hope I didn\'t miss out on too much :('}
     ]
 
 def populate():
@@ -92,7 +93,10 @@ Come for an opportunity to make friends, solve interesting challenges, and, most
 
 
 def add_user(name,email,society=None):
-    user = User.objects.get_or_create(username=name)[0]
+    '''
+    Helper function to setup a user with a default password
+    '''
+    user = User.objects.get_or_create(username=name).get()
     user.email = email
     user.set_password('password')
     user.save()
@@ -101,7 +105,10 @@ def add_user(name,email,society=None):
     return user
 
 def add_society(name,acronym,events,user, ticket_url=None,profile=None,banner=None):
-    society = Society.objects.get_or_create(name=name, user=user)[0]
+    '''
+    Helper function to setup a society
+    '''
+    society = Society.objects.get_or_create(name=name, user=user).get()
     society.acronym = acronym
     if profile: society.profile = profile 
     if banner: society.banner = banner
@@ -110,7 +117,10 @@ def add_society(name,acronym,events,user, ticket_url=None,profile=None,banner=No
     return society
 
 def add_event(name,description,date,society,ticket_url = None, banner=None,location=None):
-    event = Event.objects.get_or_create(name=name,society=society)[0]
+    '''
+    Helper function to setup an event
+    '''
+    event = Event.objects.get_or_create(name=name,society=society).get()
     event.description = description
     event.date = date
     if ticket_url: event.ticket_url = ticket_url
@@ -122,15 +132,16 @@ def add_event(name,description,date,society,ticket_url = None, banner=None,locat
     return event
 
 def add_comment(content, event):
-    comment = Comment.objects.get_or_create(content=content, event=event)[0]
+    '''
+    Helper function to setup a comment
+    '''
+    comment = Comment.objects.get_or_create(content=content, event=event).get()
+    # Fake Google Auth token for testing
     comment.auth='test_token'
     comment.save()
     return comment
 
 if __name__ == '__main__':
-    # Setup a test user for comments
-    test_user = {'username':'commenter',
-                    'email':'commenter@gmail.com'}
-    test_user = add_user(test_user['username'],test_user['email'])
     print('Populating database...')
     populate()
+    print('Database has been populated :) \nIgnore any datetime warnings as we are using fixed times for testing, so don\'t need to be conerned about timezones.')
