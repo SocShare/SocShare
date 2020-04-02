@@ -91,7 +91,6 @@ def edit_event(request, event_slug):
     context = {"title":"Events","event": event}
     return render(request, 'socshare/edit_event.html', context)
 
-# TODO: Build Test for Profile
 def profiles(request):
     '''
     Similar to events page, but it shows society
