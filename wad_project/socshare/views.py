@@ -101,6 +101,7 @@ def profiles(request):
     context = {"title": "Societies", "searchbar":True, "society" : [s for s in societies]}
     return render(request, 'socshare/society.html', context)
 
+# TODO: Build Test for calendar
 def calendar(request):
     '''
     Display events by date and location using a 
@@ -189,6 +190,7 @@ def dashboard(request):
         return render(request,'socshare/dashboard.html',context={"title":"Dashboard","events":events,'email':request.user.email})
     return redirect(reverse('socshare:events'))
 
+# This is not going to get a test since banner and profile images are a pain to test and description isn't used for anything
 def update_profile(request):
     '''
     Deal with simple profile data updates
@@ -206,6 +208,7 @@ def update_profile(request):
             society.description=description
     return redirect(reverse('socshare:dashboard'))
 
+# TODO: Build Test for update_account
 def update_account(request):
     '''
     Deal with password and email updates. Requires user
@@ -253,7 +256,7 @@ def add_event(request):
             if all([name,date,time,location,description]):
                 # combine date and time into one datetime field
                 date=datetime.strptime(date+' '+time,'%Y-%m-%d %H:%M')
-                event = Event.objects.get_or_create(name=name,society=request.user.society).get()
+                event,_ = Event.objects.get_or_create(name=name,society=request.user.society)
                 event.description=description
                 event.date=date
                 event.ticket_url=url
