@@ -40,6 +40,7 @@ pip install -r requirements.txt
 4. You'll need to migrate the database before we can add the test data
 ```sh
 cd wad_project
+python manage.py makemigrations
 python manage.py migrate
 ```
 5. Run `population_script.py` to populate the database. This step may print out warnings to do with timezones, however they are not important as it is test data.
