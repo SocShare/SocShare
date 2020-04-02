@@ -190,7 +190,7 @@ def dashboard(request):
         return render(request,'socshare/dashboard.html',context={"title":"Dashboard","events":events,'email':request.user.email})
     return redirect(reverse('socshare:events'))
 
-# TODO: Build Test for update_profile
+# This is not going to get a test since banner and profile images are a pain to test and description isn't used for anything
 def update_profile(request):
     '''
     Deal with simple profile data updates

@@ -12,3 +12,21 @@ class Profile(TestCase):
         resp = c.get(reverse('socshare:profiles'))
         suc,k = are_all_elements_present(resp.content,valid_profile)
         self.assertTrue(suc,f"Some info about the profile is not shown : {k}")
+
+    """
+    Test the profiles page's ability to render profiles for each society
+    """
+    def test_profile_page(self):
+        register_and_login()
+        resp = c.get(reverse('socshare:profile',kwargs={"slug",valid_profile["acronym"]}))
+        suc,k = are_all_elements_present(resp.content,valid_profile)
+        self.assertTrue(suc,f"Some info about the profile is not shown : {k}")
+
+    """
+    Test the profiles page's ability to render profiles for each society
+    """
+    def test_user_profile_page(self):
+        register_and_login()
+        resp = c.get(reverse('socshare:user_profile'))
+        suc,k = are_all_elements_present(resp.content,valid_profile)
+        self.assertTrue(suc,f"Some info about the profile is not shown : {k}")
