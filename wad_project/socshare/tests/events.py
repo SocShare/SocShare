@@ -51,6 +51,8 @@ class Events(TestCase):
     Remove an event then try an retrieve it from the DB
     """
     def test_create_events_fuzz(self):
+        register_and_login()
+        add_event()
         suc,k = nulls_fuzzer(reverse('socshare:add_event'),valid_event,required_mask={"url":0})
         self.assertTrue(suc,f"The first field to inccorrectly accept a null was {k}")
 

@@ -11,5 +11,6 @@ class Calendar(TestCase):
         register_and_login()
         add_event()
         resp = c.get(reverse('socshare:calendar'))
-        suc,k = are_all_elements_present(resp.content,valid_event,{"date":0,"time":0,"location":0})
+        print(resp.content)
+        suc,k = are_all_elements_present(resp.content,valid_event,{"date":0,"url":0,"location":0})
         self.assertTrue(suc,f"Some info about the event is not shown : {k}")
