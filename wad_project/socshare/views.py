@@ -314,6 +314,7 @@ def user_profile(request):
             "title":society.acronym.upper()+" Profile",
             "name":society.name,
             "fullscreen":True, 
+            "description":society.description,
             "logo":society.profile,
             "banner_img_url":society.banner, 
             "events":Event.objects.filter(society=society)
