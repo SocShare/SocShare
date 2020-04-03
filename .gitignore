@@ -136,3 +136,7 @@ SocShare.code-workspace
 dockerfile
 
 toms_crap
+
+# Stop tracking migrations
+migrations/*
+!migrations/__init__.py
