@@ -47,7 +47,15 @@ python manage.py migrate
 ```sh
 python population_script.py
 ```
-6. Now you can run the server, which is accessible at http://localhost:8000 by default
+6. Now it's time to run some tests to make sure the database is properly populated and the site is working as intended
+```sh
+python manage.py test socshare.tests
+```
+<p align="center">
+    <img src="images/tests.gif" alt="Testing">
+</p>
+
+7. Finally, you can run the server which is accessible at http://localhost:8000 by default
 ```sh
 python manage.py runserver
 ```
